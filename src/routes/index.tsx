@@ -8,6 +8,7 @@ import { Reviews } from "@/components/Reviews";
 import { Certifications } from "@/components/Certifications";
 import { Contact } from "@/components/Contact";
 import { SideRailLeft, SideRailRight } from "@/components/SideRail";
+import { MouseBlob } from "@/components/MouseBlob";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,6 +28,7 @@ function Index() {
   return (
     <main className="relative">
       <Navbar />
+      <MouseBlob />
       <SideRailLeft />
       <SideRailRight />
       <Hero />
