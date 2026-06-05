@@ -9,6 +9,7 @@ import { Certifications } from "@/components/Certifications";
 import { Contact } from "@/components/Contact";
 import { SideRailLeft, SideRailRight } from "@/components/SideRail";
 import { MouseBlob } from "@/components/MouseBlob";
+import { SectionDots } from "@/components/SectionDots";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -31,6 +32,7 @@ function Index() {
       <MouseBlob />
       <SideRailLeft />
       <SideRailRight />
+      <SectionDots />
       <Hero />
       <About />
       <Experience />
