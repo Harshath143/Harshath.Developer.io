@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquare, Send, Bot, Sparkles, User, X, CornerDownLeft, FileDown } from "lucide-react";
+import { MessageSquare, Send, Bot, Sparkles, User, X, CornerDownLeft, FileDown, ExternalLink } from "lucide-react";
 import resumePdf from "../assets/Mohammed_Harshath.pdf";
 
 type Message = {
@@ -11,13 +11,17 @@ type Message = {
 };
 
 const RESPONSES: Record<string, string> = {
-  skills: "Harshath's expertise spans GenAI & LLM (LangChain, LangGraph, RAG, Multi-Agent Systems), Machine Learning (PyTorch, Transformers, MLOps), Backend (FastAPI, Django, Celery, Redis), Cloud/DevOps (Docker, Kubernetes, AWS, GCP), and Programming Languages (Python, SQL, Bash, Java, C#).",
-  experience: "He is currently an AI & ML Engineer at Holistic MD LLP (Coimbatore, India) building GenAI backends, multi-agent frameworks, and RAG pipelines. Previously, he was an AI Developer at OPSEN (London, UK, Remote) working on clickhouse-integrated risk models, and had internship stints at TMIS and WeInvest.",
-  projects: "His notable projects are:\n• AI Agent - Investment Advisory System: Personalized LangChain + FastAPI stock forecasting API.\n• VoiceGPT: Offline local speech voice assistant supporting Tamil & Marathi.\n• AI_Company_prototype (NeoForge AI): Autonomous software generation multi-agent framework built with LangGraph.",
-  contact: "You can reach out to Harshath directly via email at harshathdeveloper@gmail.com, or check out his GitHub and LinkedIn handles located in the sidebar.",
-  education: "He achieved Rank 2852 in GATE 2024 (Data Science & AI) and holds certifications in Master Data Science and Advanced Programming Professional from IITM GUVI.",
-  resume: `You can view or download Mohammed Harshath's official resume here: [Download Resume PDF](${resumePdf})`,
-  default: "I'm not sure about that. Try asking about his 'skills', 'experience', 'projects', 'resume', 'education', or how to 'contact' him!"
+  skills: "Certainly! Mohammed Harshath has a comprehensive technical skillset centered on AI, Machine Learning, and Backend engineering:\n\n• **GenAI & LLM:** LangChain, LangGraph, AutoGen, vLLM, HuggingFace, RAG Pipelines, and Multi-Agent Systems.\n• **AI & ML:** PyTorch, BERT, Transformers, Model Fine-tuning, Vector Databases, and MLOps.\n• **Programming Languages:** Python, SQL, and Bash.\n• **Backend Development:** FastAPI, Django, Celery, Redis, Docker, PostgreSQL, REST APIs, and Microservices.\n• **Cloud & DevOps:** Docker, Kubernetes (Learning), GCP, AWS, and Distributed Systems.\n\nIs there a specific technology area you would like to know more about?",
+  experience: "I would be happy to share details about Harshath's professional experience. He has a solid track record in AI development, including:\n\n1. **AI & ML Engineer @ Holistic MD LLP** (Coimbatore, India | Dec 2025 – Present)\n   • Developed *VisionAnalyzer*, a real-time computer vision application using Django and Groq API for low-latency object detection and ingredient extraction from live camera feeds.\n   • Implemented LLM-powered RAG workflows, improving document comprehension and policy analysis accuracy by 40%.\n   • Designed and deployed intelligent AI agents with tool-based reasoning and Dynamic Task Execution for management simulations.\n   • Built a production legislative automation system using LangGraph and RAG pipelines, reducing processing latency by 30%.\n\n2. **AI Developer @ OPSEN** (London, UK | Remote | 9 months)\n   • Worked on clickhouse-integrated risk models, and developed high-performance backend pipelines.\n\nHe has also completed internship stints at TMIS and WeInvest. Let me know if you would like more details about any of these roles!",
+  projects: "I would be glad to tell you about Harshath's key academic and professional projects:\n\n• **AI Agent - Investment Advisory System** (LangChain, LlamaIndex, FastAPI, Docker)\n  Developed a personalized investment advisor using LangChain/RAG and transformer models for predictive stock analysis, delivering accurate, tailored forecasts. Built as a containerized inference API with 99.9% uptime.\n\n• **VoiceGPT - Multilingual Voice Assistant** (HuggingFace, RAG, Ollama, VEM, Wav2Vec2, MMS-TTS)\n  Developed an end-to-end multilingual voice assistant (with Tamil & Marathi support) using Wav2Vec2 for Speech-to-Text and MMS-TTS for natural Text-to-Speech generation. It operates as an offline, privacy-focused system utilizing sentence transformers for local RAG.\n\n• **AI Company Prototype / NeoForge AI**\n  An autonomous software generation multi-agent framework built using LangGraph to automate software development tasks.\n\nWould you like to hear more about the technical stack of any particular project?",
+  contact: "I would be happy to help you get in touch with Harshath! You can reach out to him directly through the following channels:\n\n• **Email:** [harshath142@gmail.com](mailto:harshath142@gmail.com) (or [harshathdeveloper@gmail.com](mailto:harshathdeveloper@gmail.com))\n• **Phone:** [+91 8667701712](tel:+918667701712)\n• **LinkedIn:** [LinkedIn Profile](https://www.linkedin.com/in/mohammed-harshath-ss-a68435208/)\n• **GitHub:** [GitHub Profile](https://github.com/Harshath143)\n\nFeel free to send him an email or connect on LinkedIn. He would love to hear from you!",
+  phone: "Harshath's phone number is [+91 8667701712](tel:+918667701712). You can also reach him via email at [harshath142@gmail.com](mailto:harshath142@gmail.com).",
+  education: "Certainly. Harshath has a strong academic foundation:\n\n• **B.Tech in Artificial Intelligence & Data Science** (2021 – 2024)\n  Graduated from Kathir College of Engineering (Coimbatore, India) with a CGPA of **8.02/10**.\n  *Relevant Coursework:* Machine Learning, Deep Learning, Data Structures & Algorithms, and Database Systems.\n\n• **GATE 2024 (Data Science & AI):** Achieved **All India Rank 2852** (Top 5% nationally), showcasing his deep understanding of AI foundations.\n\n• **Professional Certifications:**\n  • Master Data Science from IITM GUVI (Dec 2024)\n  • Advanced Programming Professional from IITM GUVI (Dec 2024)\n\nLet me know if you have any questions about his academic background!",
+  location: "Mohammed Harshath is currently based in Coimbatore, Tamil Nadu, India. He works on-site there at Holistic MD LLP, but is open to remote work opportunities globally.",
+  github: "You can find Harshath's open-source projects and code repositories on GitHub: [GitHub Profile](https://github.com/Harshath143)",
+  linkedin: "Connect with Harshath professionally on LinkedIn: [LinkedIn Profile](https://www.linkedin.com/in/mohammed-harshath-ss-a68435208/)",
+  resume: `Certainly! You can view or download Mohammed Harshath's official resume here: [Download Resume PDF](${resumePdf}). Let me know if you would like me to summarize any specific section for you!`,
+  default: "Thank you for your message! I'm here to help you learn more about Harshath. You can ask me about his:\n\n• **Skills** (e.g., 'What tech stack does he use?')\n• **Experience** (e.g., 'Where has he worked?')\n• **Projects** (e.g., 'Tell me about VoiceGPT')\n• **Education & Certifications** (e.g., 'Where did he study?')\n• **Contact details** (e.g., 'How can I contact him?')\n• **Resume** (e.g., 'Can I get his resume?')\n\nHow can I help you today?"
 };
 
 // Render helper to turn [link text](url) markdown syntax into React <a> links
@@ -33,16 +37,17 @@ const renderMessageText = (text: string) => {
     }
     const linkText = match[1];
     const linkUrl = match[2];
+    const isPdf = linkUrl.toLowerCase().endsWith(".pdf") || linkUrl.includes("blob") || linkUrl.includes("pdf");
     parts.push(
       <a
         key={match.index}
         href={linkUrl}
         target="_blank"
         rel="noopener noreferrer"
-        download={linkUrl.endsWith(".pdf")}
+        download={isPdf}
         className="text-primary underline hover:text-primary/80 font-bold inline-flex items-center gap-1"
       >
-        <FileDown className="h-3 w-3 inline" />
+        {isPdf ? <FileDown className="h-3 w-3 inline" /> : <ExternalLink className="h-3 w-3 inline" />}
         {linkText}
       </a>
     );
@@ -88,18 +93,38 @@ export function AIChatbot() {
     const cleanText = textToSend.toLowerCase();
     let replyText = RESPONSES.default;
     
-    if (cleanText.includes("skill") || cleanText.includes("languages") || cleanText.includes("tech")) {
-      replyText = RESPONSES.skills;
-    } else if (cleanText.includes("experience") || cleanText.includes("work") || cleanText.includes("job") || cleanText.includes("company")) {
-      replyText = RESPONSES.experience;
-    } else if (cleanText.includes("project") || cleanText.includes("portfolio") || cleanText.includes("built")) {
-      replyText = RESPONSES.projects;
-    } else if (cleanText.includes("contact") || cleanText.includes("email") || cleanText.includes("hire") || cleanText.includes("mail")) {
+    // Regex matches with word boundaries to avoid substring matching issues (e.g. 'him' containing 'hi')
+    const match = (keywords: string[]) => {
+      const pattern = new RegExp(`\\b(${keywords.join("|")})\\b`, "i");
+      return pattern.test(cleanText);
+    };
+
+    if (match(["contact", "email", "hire", "mail", "connect"])) {
       replyText = RESPONSES.contact;
-    } else if (cleanText.includes("resume") || cleanText.includes("cv") || cleanText.includes("download") || cleanText.includes("pdf")) {
+    } else if (match(["phone", "mobile", "number", "call", "ph"])) {
+      replyText = RESPONSES.phone;
+    } else if (match(["github", "git", "repo", "repos", "code"])) {
+      replyText = RESPONSES.github;
+    } else if (match(["linkedin", "profile", "social"])) {
+      replyText = RESPONSES.linkedin;
+    } else if (match(["resume", "cv", "download", "pdf"])) {
       replyText = RESPONSES.resume;
-    } else if (cleanText.includes("education") || cleanText.includes("cert") || cleanText.includes("gate") || cleanText.includes("degree") || cleanText.includes("guvi")) {
+    } else if (match(["skill", "skills", "languages", "tech", "programming", "framework", "frameworks", "stack"])) {
+      replyText = RESPONSES.skills;
+    } else if (match(["experience", "work", "job", "jobs", "company", "companies", "holistic", "opsen"])) {
+      replyText = RESPONSES.experience;
+    } else if (match(["project", "projects", "portfolio", "built", "voicegpt", "advisor", "neoforge"])) {
+      replyText = RESPONSES.projects;
+    } else if (match(["education", "college", "degree", "university", "gpa", "cgpa", "kathir", "gate", "cert", "certs", "certification", "certifications", "guvi"])) {
       replyText = RESPONSES.education;
+    } else if (match(["location", "live", "where", "city", "coimbatore"])) {
+      replyText = RESPONSES.location;
+    } else if (match(["hello", "hi", "hey", "greet", "greetings", "yo", "morning", "afternoon", "evening"])) {
+      replyText = "Hello! It is a pleasure to connect with you. I am Harshath's AI Assistant. I can share detailed information about his technical skills, work experience, projects, education, or contact details. How can I help you today?";
+    } else if (match(["thank", "thanks", "thankyou", "awesome", "great", "perfect"])) {
+      replyText = "You are very welcome! It is my absolute pleasure to help. Please let me know if you have any other questions about Harshath's work or experience!";
+    } else if (match(["bye", "goodbye", "exit", "quit", "close"])) {
+      replyText = "Thank you for taking the time to chat! I hope you have a wonderful day. Please feel free to open this chat again if you ever need more information about Harshath. Goodbye!";
     }
 
     // Bot response ID
