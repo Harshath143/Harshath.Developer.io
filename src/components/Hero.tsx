@@ -1,4 +1,4 @@
-export function Hero() {
+import { ScrambleText } from "./ScrambleText";
   return (
     <section id="top" className="relative min-h-screen flex items-center pt-28 pb-20 px-6 lg:px-24 overflow-hidden">
       <div className="relative max-w-4xl z-10">
