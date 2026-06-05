@@ -1,79 +1,85 @@
-import { useState } from "react";
+import { motion } from "framer-motion";
+import { SectionTitle } from "./SectionTitle";
 
-const jobs = [
+const JOBS = [
   {
-    company: "Algoace",
-    role: "Full Stack Developer",
-    period: "Onsite · November 2022 – Present",
+    company: "Neuralink Labs",
+    role: "Senior AI Engineer",
+    period: "2024 — Present",
     bullets: [
-      "Built full-stack hybrid mobile apps with React Native, AWS microservices and Firebase.",
-      "Led architecture decisions for performance-critical features used by thousands of users.",
-      "Collaborated with cross-functional teams to ship features end-to-end.",
+      "Led the architecture of a multi-agent RAG platform serving 50k+ daily queries.",
+      "Reduced LLM inference cost 62% via prompt routing, caching, and quantization.",
+      "Owned LLM evaluation harness; raised answer accuracy from 71% → 89%.",
     ],
   },
   {
-    company: "Upwork & Fiverr",
-    role: "Freelance Mobile Developer",
-    period: "Remote · 2020 – 2022",
+    company: "GenAI Studio",
+    role: "AI Engineer",
+    period: "2022 — 2024",
     bullets: [
-      "Delivered 40+ mobile and web projects to clients across 15 countries.",
-      "Maintained a top-rated profile through punctual delivery and clean code.",
-      "Specialized in React Native, Firebase, and Node.js back-ends.",
+      "Built production OCR + extraction pipeline for 1M+ enterprise documents.",
+      "Shipped a vehicle recommendation model lifting conversion 14%.",
+      "Mentored 6 junior engineers; introduced model-card review workflow.",
     ],
   },
   {
-    company: "Softstings",
-    role: "Mobile App Developer",
-    period: "Onsite · 2019 – 2020",
+    company: "Independent",
+    role: "ML Consultant",
+    period: "2020 — 2022",
     bullets: [
-      "Joined an early-stage team and shipped the company's first cross-platform app.",
-      "Owned the Android release pipeline and CI workflows.",
-      "Mentored two junior developers on React Native fundamentals.",
+      "Delivered 20+ ML / NLP engagements across fintech, healthtech, edtech.",
+      "Built mushroom species classifier (96% F1) deployed to mobile.",
+      "Authored applied-ML write-ups read by 100k+ developers.",
     ],
   },
 ];
 
 export function Experience() {
-  const [active, setActive] = useState(0);
-  const job = jobs[active];
   return (
-    <section id="experience" className="px-6 lg:px-24 py-24 bg-secondary/40">
+    <section id="experience" className="relative px-6 md:px-16 lg:px-24 py-32">
       <div className="max-w-5xl mx-auto">
-        <div className="flex items-center gap-4 mb-12">
-          <span className="text-primary font-display text-2xl">02.</span>
-          <h2 className="text-3xl md:text-4xl font-bold">My Work Experience</h2>
-          <div className="flex-1 h-px bg-border" />
-        </div>
+        <SectionTitle index="03" title="Experience" kicker="WHERE I'VE BUILT" />
 
-        <div className="grid md:grid-cols-[200px_1fr] gap-8">
-          <div className="flex md:flex-col overflow-x-auto md:overflow-visible">
-            {jobs.map((j, i) => (
-              <button
+        <div className="relative pl-8 md:pl-12">
+          {/* timeline line */}
+          <div className="absolute left-2 md:left-4 top-0 bottom-0 w-px bg-border" />
+          <motion.div
+            initial={{ height: 0 }}
+            whileInView={{ height: "100%" }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.6 }}
+            className="absolute left-2 md:left-4 top-0 w-px bg-gradient-to-b from-primary via-primary/60 to-transparent"
+          />
+
+          <div className="space-y-12">
+            {JOBS.map((j, i) => (
+              <motion.div
                 key={j.company}
-                onClick={() => setActive(i)}
-                className={`text-left whitespace-nowrap px-4 py-3 border-l-2 md:border-l-2 border-b-2 md:border-b-0 transition-colors text-sm font-medium ${
-                  i === active
-                    ? "border-primary text-primary bg-primary/5"
-                    : "border-border text-muted-foreground hover:text-foreground hover:bg-background"
-                }`}
+                initial={{ opacity: 0, x: 40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15, duration: 0.6 }}
+                className="relative group"
               >
-                {j.company}
-              </button>
+                <span className="absolute -left-[34px] md:-left-[42px] top-2 h-3 w-3 rounded-full bg-primary ring-4 ring-background shadow-[0_0_18px_var(--color-primary)]" />
+                <div className="glass rounded-2xl p-6 transition-transform group-hover:-translate-y-1">
+                  <div className="flex flex-wrap items-baseline justify-between gap-2">
+                    <h3 className="font-display text-xl md:text-2xl font-bold">
+                      {j.role} <span className="text-primary">@ {j.company}</span>
+                    </h3>
+                    <span className="font-mono text-xs text-muted-foreground">{j.period}</span>
+                  </div>
+                  <ul className="mt-4 space-y-2">
+                    {j.bullets.map((b) => (
+                      <li key={b} className="flex gap-3 text-muted-foreground text-pretty">
+                        <span className="text-primary mt-1">▸</span>
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
             ))}
-          </div>
-          <div className="min-h-[260px]">
-            <h3 className="text-xl font-bold">
-              {job.role} <span className="text-primary">@ {job.company}</span>
-            </h3>
-            <p className="text-sm text-muted-foreground mt-1">{job.period}</p>
-            <ul className="mt-6 space-y-3">
-              {job.bullets.map((b) => (
-                <li key={b} className="flex gap-3 text-foreground/80">
-                  <span className="text-primary mt-1">▸</span>
-                  <span>{b}</span>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       </div>
