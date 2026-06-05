@@ -3,32 +3,57 @@ import { useEffect, useState } from "react";
 import { ArrowDownToLine, Folder, Send } from "lucide-react";
 import resumePdf from "../assets/Mohammed_Harshath.pdf";
 
-const ROLES = ["AI Engineer", "LLM Developer", "RAG Architect", "ML Engineer", "Prompt Engineer"];
+const ROLES = ["AI Engineer", "LLM Developer", "RAG Architect", "ML Engineer", "Prompt Engineer", "Business Analyst", "Project Manager", "Software Engineer", "Automation Engineer"];
 
-function useTypewriter(words: string[], speed = 90, hold = 1400) {
+function useScrambleText(words: string[], hold = 2000, speed = 35) {
   const [text, setText] = useState("");
-  const [i, setI] = useState(0);
-  const [deleting, setDeleting] = useState(false);
+  const [wordIndex, setWordIndex] = useState(0);
+
+  const glyphs = "01#$%-+?*[]{}<>_@&%X";
+
   useEffect(() => {
-    const word = words[i % words.length];
-    const t = setTimeout(() => {
-      if (!deleting) {
-        const next = word.slice(0, text.length + 1);
-        setText(next);
-        if (next === word) setTimeout(() => setDeleting(true), hold);
-      } else {
-        const next = word.slice(0, text.length - 1);
-        setText(next);
-        if (next === "") { setDeleting(false); setI((v) => v + 1); }
+    const targetWord = words[wordIndex % words.length];
+    let resolveProgress = 0;
+    let intervalId: NodeJS.Timeout;
+
+    const animate = () => {
+      const resolvedCount = Math.floor(resolveProgress);
+      let currentText = "";
+
+      for (let i = 0; i < targetWord.length; i++) {
+        if (i < resolvedCount) {
+          currentText += targetWord[i];
+        } else {
+          if (targetWord[i] === " ") {
+            currentText += " ";
+          } else {
+            currentText += glyphs[Math.floor(Math.random() * glyphs.length)];
+          }
+        }
       }
-    }, deleting ? speed / 2 : speed);
-    return () => clearTimeout(t);
-  }, [text, deleting, i, words, speed, hold]);
+
+      setText(currentText);
+
+      if (resolvedCount < targetWord.length) {
+        resolveProgress += 0.45;
+        intervalId = setTimeout(animate, speed);
+      } else {
+        intervalId = setTimeout(() => {
+          setWordIndex((prev) => prev + 1);
+        }, hold);
+      }
+    };
+
+    animate();
+
+    return () => clearTimeout(intervalId);
+  }, [wordIndex, words, hold, speed]);
+
   return text;
 }
 
 export function Hero() {
-  const typed = useTypewriter(ROLES);
+  const scrambled = useScrambleText(ROLES);
 
   return (
     <section
@@ -65,7 +90,7 @@ export function Hero() {
             className="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight text-balance"
           >
             Mohammed <br />
-            <span className="gradient-text">Harshath.</span>
+            <span className="gradient-text">Harshath SS.</span>
           </motion.h1>
 
           <motion.div
@@ -75,7 +100,7 @@ export function Hero() {
             className="mt-6 flex items-center gap-3 font-mono text-lg md:text-2xl"
           >
             <span className="text-muted-foreground">$</span>
-            <span className="text-foreground">{typed}</span>
+            <span className="text-foreground">{scrambled}</span>
             <span className="inline-block w-[10px] h-6 bg-primary animate-pulse" />
           </motion.div>
 
