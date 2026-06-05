@@ -1,53 +1,100 @@
-import portrait from "@/assets/portrait.jpg";
+import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { SectionTitle } from "./SectionTitle";
 
-const skills = [
-  "JavaScript/TypeScript", "React Native / React.js", "Firebase", "Firestore",
-  "Cognito", "Node.js", "Express.js", "AWS", "MongoDB", "Serverless",
+const STATS = [
+  { value: 4, suffix: "+", label: "Years Experience" },
+  { value: 30, suffix: "+", label: "Projects Shipped" },
+  { value: 12, suffix: "", label: "Certifications" },
+  { value: 18, suffix: "+", label: "AI Models Built" },
 ];
+
+function Counter({ to, suffix }: { to: number; suffix: string }) {
+  const [n, setN] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        let start = 0;
+        const dur = 1400;
+        const t0 = performance.now();
+        const tick = (t: number) => {
+          const p = Math.min(1, (t - t0) / dur);
+          setN(Math.floor(start + (to - start) * (1 - Math.pow(1 - p, 3))));
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+        obs.disconnect();
+      }
+    });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [to]);
+  return <span ref={ref}>{n}{suffix}</span>;
+}
 
 export function About() {
   return (
-    <section id="about" className="relative px-6 lg:px-24 py-24">
+    <section id="about" className="relative px-6 md:px-16 lg:px-24 py-32">
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center gap-4 mb-12">
-          <span className="text-primary font-display text-2xl">01.</span>
-          <h2 className="text-3xl md:text-4xl font-bold">My Portfolio</h2>
-          <div className="flex-1 h-px bg-border" />
-        </div>
+        <SectionTitle index="01" title="About Me" kicker="WHO I AM" />
 
-        <div className="grid lg:grid-cols-[1fr_360px] gap-12 items-start">
-          <div className="space-y-5 text-foreground/75 leading-relaxed">
-            <p>
-              Greetings, I'm Muhammad Aamir Malik, a seasoned mobile app developer with over 5
-              years of experience in the dynamic IT industry. My expertise lies in crafting
-              cutting-edge, full-stack mobile and hybrid applications for Android and iOS using
-              React Native.
-            </p>
-            <p>
-              Having delivered projects to satisfied clients worldwide, I've collaborated with
-              individuals from various cultures — from local software houses to Fiverr and Upwork,
-              and eventually international companies.
-            </p>
-            <p>Over time I've specialized in many technologies, some of them are…</p>
+        <div className="grid lg:grid-cols-[1fr_1.3fr] gap-12 items-start">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="relative aspect-[4/5] rounded-2xl overflow-hidden glass"
+          >
+            <div
+              className="absolute inset-0"
+              style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
+            />
+            <div className="absolute inset-0 grid place-items-center">
+              <span className="font-display text-9xl font-bold text-background/30">MH</span>
+            </div>
+            <div className="absolute bottom-4 left-4 right-4 glass rounded-xl p-4">
+              <p className="font-mono text-xs text-primary">currently @</p>
+              <p className="font-display font-bold">Building AI products</p>
+            </div>
+          </motion.div>
 
-            <ul className="grid grid-cols-2 gap-x-6 gap-y-2 pt-4">
-              {skills.map((s) => (
-                <li key={s} className="flex items-center gap-3 text-foreground/80">
-                  <span className="text-primary">▸</span>
-                  <span className="text-sm">{s}</span>
-                </li>
+          <div>
+            {["I'm an AI engineer obsessed with making intelligence feel useful. My work lives at the intersection of LLMs, retrieval systems, and crafted user interfaces — turning research into products people actually want to use.",
+              "I've shipped RAG agents that reason over millions of documents, OCR pipelines processing enterprise paperwork, and recommendation systems that improved conversion by double digits. I care equally about model accuracy and the milliseconds between click and response.",
+              "When I'm not training models, I write about applied AI, mentor builders, and stress-test new frameworks the day they drop."]
+              .map((p, i) => (
+              <motion.p
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15, duration: 0.6 }}
+                className="text-lg leading-relaxed text-muted-foreground mb-5 text-pretty"
+              >
+                {p}
+              </motion.p>
+            ))}
+
+            <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
+              {STATS.map((s, i) => (
+                <motion.div
+                  key={s.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 + i * 0.1 }}
+                  className="glass rounded-xl p-4"
+                >
+                  <p className="font-display text-3xl font-bold text-primary">
+                    <Counter to={s.value} suffix={s.suffix} />
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">{s.label}</p>
+                </motion.div>
               ))}
-            </ul>
-          </div>
-
-          <div className="relative group max-w-xs justify-self-center lg:justify-self-end">
-            <div className="absolute inset-0 translate-x-4 translate-y-4 rounded-xl border-2 border-primary -z-10 transition-transform group-hover:translate-x-2 group-hover:translate-y-2" />
-            <div className="rounded-xl overflow-hidden bg-primary/10">
-              <img
-                src={portrait}
-                alt="Portrait of Muhammad Aamir"
-                className="w-full h-full object-cover mix-blend-multiply grayscale hover:grayscale-0 transition-all"
-              />
             </div>
           </div>
         </div>

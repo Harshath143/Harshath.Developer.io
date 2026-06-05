@@ -2,7 +2,8 @@
 @source "../src";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant theme-dark (&:is([data-theme="dark"] *));
+@custom-variant theme-ai (&:is([data-theme="ai"] *));
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -30,33 +31,86 @@
   --color-ring: var(--ring);
   --color-blob: var(--blob);
   --color-blob-2: var(--blob-2);
-  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Sora", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
-:root {
-  --radius: 0.75rem;
-  --background: oklch(0.985 0.005 90);
-  --foreground: oklch(0.22 0.03 250);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.03 250);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.03 250);
-  --primary: oklch(0.62 0.21 25);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.95 0.01 90);
-  --secondary-foreground: oklch(0.22 0.03 250);
-  --muted: oklch(0.95 0.01 90);
-  --muted-foreground: oklch(0.5 0.02 250);
-  --accent: oklch(0.92 0.04 90);
-  --accent-foreground: oklch(0.22 0.03 250);
-  --destructive: oklch(0.6 0.22 27);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.9 0.01 90);
-  --input: oklch(0.9 0.01 90);
-  --ring: oklch(0.62 0.21 25);
-  --blob: oklch(0.86 0.17 90);
-  --blob-2: oklch(0.78 0.16 35);
+/* THEME 1 — Light */
+:root,
+[data-theme="light"] {
+  --radius: 0.85rem;
+  --background: #f5f5f5;
+  --foreground: #111111;
+  --card: #ffffff;
+  --card-foreground: #111111;
+  --popover: #ffffff;
+  --popover-foreground: #111111;
+  --primary: #e63946;
+  --primary-foreground: #ffffff;
+  --secondary: #f4d35e;
+  --secondary-foreground: #111111;
+  --muted: #eaeaea;
+  --muted-foreground: #555555;
+  --accent: #f4d35e;
+  --accent-foreground: #111111;
+  --destructive: #e63946;
+  --destructive-foreground: #ffffff;
+  --border: rgba(17, 17, 17, 0.1);
+  --input: rgba(17, 17, 17, 0.12);
+  --ring: #e63946;
+  --blob: #f4d35e;
+  --blob-2: #e63946;
+}
+
+/* THEME 2 — Dark */
+[data-theme="dark"] {
+  --background: #0b1020;
+  --foreground: #ffffff;
+  --card: #11172a;
+  --card-foreground: #ffffff;
+  --popover: #11172a;
+  --popover-foreground: #ffffff;
+  --primary: #00d4ff;
+  --primary-foreground: #061018;
+  --secondary: #1a1a2e;
+  --secondary-foreground: #ffffff;
+  --muted: #161c30;
+  --muted-foreground: #9aa4c2;
+  --accent: #1a1a2e;
+  --accent-foreground: #ffffff;
+  --destructive: #ff5577;
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #00d4ff;
+  --blob: #00d4ff;
+  --blob-2: #1a1a2e;
+}
+
+/* THEME 3 — AI */
+[data-theme="ai"] {
+  --background: #050505;
+  --foreground: #ffffff;
+  --card: #0c0c0f;
+  --card-foreground: #ffffff;
+  --popover: #0c0c0f;
+  --popover-foreground: #ffffff;
+  --primary: #00ffb3;
+  --primary-foreground: #04130d;
+  --secondary: #8b5cf6;
+  --secondary-foreground: #ffffff;
+  --muted: #111114;
+  --muted-foreground: #9b9bb0;
+  --accent: #8b5cf6;
+  --accent-foreground: #ffffff;
+  --destructive: #ff4d6d;
+  --destructive-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #00ffb3;
+  --blob: #00ffb3;
+  --blob-2: #8b5cf6;
 }
 
 @layer base {
@@ -67,15 +121,95 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    transition: background-color 0.8s cubic-bezier(0.65, 0, 0.35, 1),
+                color 0.6s ease;
+    cursor: none;
   }
-  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+  @media (pointer: coarse) {
+    body { cursor: auto; }
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+  /* Smooth color transitions across the whole tree on theme change */
+  body * {
+    transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+    transition-duration: 0.5s;
+    transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+  }
 }
 
-@utility blob-yellow {
-  background: radial-gradient(circle at 30% 30%, oklch(0.92 0.18 95), oklch(0.78 0.18 75));
-  filter: blur(2px);
+@utility text-balance { text-wrap: balance; }
+@utility text-pretty { text-wrap: pretty; }
+
+@utility glass {
+  background: color-mix(in oklab, var(--color-card) 60%, transparent);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--color-border);
 }
 
-@utility text-balance {
-  text-wrap: balance;
+@utility gradient-text {
+  background: linear-gradient(120deg, var(--color-primary), var(--color-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
+
+@utility noise {
+  position: relative;
+}
+@utility noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@utility float { animation: float 6s ease-in-out infinite; }
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+@utility spin-slow { animation: spin-slow 24s linear infinite; }
+
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(var(--orbit-r)) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(var(--orbit-r)) rotate(-360deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@utility shimmer {
+  background: linear-gradient(90deg,
+    transparent,
+    color-mix(in oklab, var(--color-primary) 30%, transparent),
+    transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s linear infinite;
+}
+
+/* Marquee for testimonials */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@utility marquee { animation: marquee 40s linear infinite; }
+
+/* Hide scrollbar but keep functional */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }

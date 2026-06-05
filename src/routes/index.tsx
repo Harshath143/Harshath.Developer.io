@@ -1,45 +1,72 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Navbar } from "@/components/Navbar";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { SmoothScroll } from "@/components/SmoothScroll";
+import { CustomCursor } from "@/components/CustomCursor";
+import { Loader } from "@/components/Loader";
+import { RadialNav } from "@/components/RadialNav";
+import { SidebarLeft, SidebarRight } from "@/components/Sidebar";
+import { MouseBlob } from "@/components/MouseBlob";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
+import { Skills } from "@/components/Skills";
 import { Experience } from "@/components/Experience";
-import { Work } from "@/components/Work";
-import { Reviews } from "@/components/Reviews";
+import { Projects } from "@/components/Projects";
 import { Certifications } from "@/components/Certifications";
+import { Achievements } from "@/components/Achievements";
+import { Testimonials } from "@/components/Testimonials";
+import { Blog } from "@/components/Blog";
 import { Contact } from "@/components/Contact";
-import { SideRailLeft, SideRailRight } from "@/components/SideRail";
-import { MouseBlob } from "@/components/MouseBlob";
-import { SectionDots } from "@/components/SectionDots";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Muhammad Aamir — Mobile App Developer" },
-      { name: "description", content: "Portfolio of Muhammad Aamir, a React Native mobile app developer with 5+ years building hybrid apps for iOS and Android." },
-      { property: "og:title", content: "Muhammad Aamir — Mobile App Developer" },
-      { property: "og:description", content: "React Native developer building hybrid mobile apps for iOS and Android." },
+      { title: "Mohammed Harshath — AI Engineer & GenAI Developer" },
+      {
+        name: "description",
+        content:
+          "Mohammed Harshath builds production AI systems — RAG agents, LLM applications, and ML pipelines. Senior AI engineer portfolio with selected projects, experience, and writing.",
+      },
+      { property: "og:title", content: "Mohammed Harshath — AI Engineer" },
+      { property: "og:description", content: "Production AI systems, RAG agents, LLM apps." },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [
+      { rel: "canonical", href: "/" },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap",
+      },
+    ],
   }),
   component: Index,
 });
 
 function Index() {
   return (
-    <main className="relative">
-      <Navbar />
-      <MouseBlob />
-      <SideRailLeft />
-      <SideRailRight />
-      <SectionDots />
-      <Hero />
-      <About />
-      <Experience />
-      <Work />
-      <Reviews />
-      <Certifications />
-      <Contact />
-    </main>
+    <ThemeProvider>
+      <SmoothScroll>
+        <Loader />
+        <CustomCursor />
+        <RadialNav />
+        <SidebarLeft />
+        <SidebarRight />
+        <MouseBlob />
+        <main className="relative">
+          <Hero />
+          <About />
+          <Skills />
+          <Experience />
+          <Projects />
+          <Certifications />
+          <Achievements />
+          <Testimonials />
+          <Blog />
+          <Contact />
+        </main>
+      </SmoothScroll>
+    </ThemeProvider>
   );
 }

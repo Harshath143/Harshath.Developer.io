@@ -1,9 +1,8 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Liquid organic blob that follows the mouse with easing.
- * Uses an SVG path that morphs between several organic shapes,
- * giving the multi-lobed, gooey look.
+ * Theme-aware liquid organic blob that follows the mouse with easing
+ * and slowly morphs between organic shapes.
  */
 const SHAPES = [
   "M421,308Q406,366,355,401Q304,436,243,427Q182,418,131,381Q80,344,72,277Q64,210,108,162Q152,114,217,95Q282,76,341,108Q400,140,422,200Q444,260,421,308Z",
@@ -21,7 +20,7 @@ export function MouseBlob() {
 
   useEffect(() => {
     const init = () => {
-      target.current = { x: window.innerWidth * 0.18, y: window.innerHeight * 0.3 };
+      target.current = { x: window.innerWidth * 0.5, y: window.innerHeight * 0.45 };
       pos.current = { ...target.current };
     };
     init();
@@ -34,10 +33,10 @@ export function MouseBlob() {
 
     let raf = 0;
     const tick = () => {
-      pos.current.x += (target.current.x - pos.current.x) * 0.07;
-      pos.current.y += (target.current.y - pos.current.y) * 0.07;
+      pos.current.x += (target.current.x - pos.current.x) * 0.05;
+      pos.current.y += (target.current.y - pos.current.y) * 0.05;
       if (wrapRef.current) {
-        wrapRef.current.style.transform = `translate3d(${pos.current.x - 320}px, ${pos.current.y - 320}px, 0)`;
+        wrapRef.current.style.transform = `translate3d(${pos.current.x - 360}px, ${pos.current.y - 360}px, 0)`;
       }
       raf = requestAnimationFrame(tick);
     };
@@ -63,14 +62,13 @@ export function MouseBlob() {
       aria-hidden
       ref={wrapRef}
       className="pointer-events-none fixed top-0 left-0 z-0 hidden md:block will-change-transform"
-      style={{ filter: "blur(8px)" }}
+      style={{ filter: "blur(60px)" }}
     >
-      <svg width="640" height="640" viewBox="0 0 500 500" className="opacity-90">
+      <svg width="720" height="720" viewBox="0 0 500 500" className="opacity-40">
         <defs>
           <radialGradient id="blobGrad" cx="35%" cy="35%" r="70%">
-            <stop offset="0%" stopColor="oklch(0.95 0.18 95)" />
-            <stop offset="60%" stopColor="oklch(0.82 0.19 80)" />
-            <stop offset="100%" stopColor="oklch(0.72 0.18 60)" />
+            <stop offset="0%" stopColor="var(--color-blob)" />
+            <stop offset="100%" stopColor="var(--color-blob-2)" />
           </radialGradient>
         </defs>
         <path
