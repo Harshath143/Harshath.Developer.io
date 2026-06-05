@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useTheme, type Theme } from "./ThemeProvider";
+import profilePic from "../assets/Harshath_profile.jpeg";
 
 const SECTIONS = [
   { id: "hero", label: "Home" },
@@ -37,10 +38,31 @@ export function RadialNav() {
       <header className="fixed top-0 inset-x-0 z-50 px-5 md:px-10 py-5 flex items-center justify-between mix-blend-difference">
         <a
           href="#hero"
-          onClick={(e) => { e.preventDefault(); onJump("hero"); }}
-          className="font-display font-bold text-lg tracking-tight text-white"
+          onClick={(e) => {
+            e.preventDefault();
+            onJump("hero");
+            // Hidden click trigger: 5 clicks opens developer passcode modal
+            const clickCount = (window as any)._logoClicks || 0;
+            const newCount = clickCount + 1;
+            (window as any)._logoClicks = newCount;
+            if (newCount >= 5) {
+              window.dispatchEvent(new CustomEvent("trigger-dev-login"));
+              (window as any)._logoClicks = 0;
+            } else {
+              // Reset clicks after 2 seconds
+              if ((window as any)._logoTimeout) clearTimeout((window as any)._logoTimeout);
+              (window as any)._logoTimeout = setTimeout(() => {
+                (window as any)._logoClicks = 0;
+              }, 2000);
+            }
+          }}
+          className="relative block rounded-full overflow-hidden h-8 w-8 border border-white/25 hover:border-primary/80 transition-colors duration-300 select-none group"
         >
-          MH<span className="text-primary">.</span>
+          <img
+            src={profilePic}
+            alt="Mohammed Harshath Profile Logo"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
         </a>
 
         <div className="flex items-center gap-2">

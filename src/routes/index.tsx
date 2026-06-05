@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { CustomCursor } from "@/components/CustomCursor";
@@ -11,6 +12,9 @@ import { About } from "@/components/About";
 import { Skills } from "@/components/Skills";
 import { Experience } from "@/components/Experience";
 import { Projects } from "@/components/Projects";
+import { Telemetry } from "@/components/Telemetry";
+import { DevConsoleModal } from "@/components/DevConsoleModal";
+import { AIChatbot } from "@/components/AIChatbot";
 import { Certifications } from "@/components/Certifications";
 import { Achievements } from "@/components/Achievements";
 import { Testimonials } from "@/components/Testimonials";
@@ -45,6 +49,36 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const [isDevMode, setIsDevMode] = useState(false);
+  const [isConsoleOpen, setIsConsoleOpen] = useState(false);
+
+  useEffect(() => {
+    // Keyboard shortcut handler (Ctrl + Shift + D)
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "d") {
+        e.preventDefault();
+        setIsConsoleOpen((prev) => !prev);
+      }
+    };
+
+    // Global custom event handler for logo click
+    const handleTriggerDevLogin = () => {
+      setIsConsoleOpen(true);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("trigger-dev-login", handleTriggerDevLogin);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("trigger-dev-login", handleTriggerDevLogin);
+    };
+  }, []);
+
+  const handleUnlockDevMode = () => {
+    setIsDevMode(true);
+  };
+
   return (
     <ThemeProvider>
       <SmoothScroll>
@@ -60,12 +94,26 @@ function Index() {
           <Skills />
           <Experience />
           <Projects />
+          
+          {/* Private Telemetry Dashboard (revealed only in Developer Mode) */}
+          {isDevMode && <Telemetry />}
+          
           <Certifications />
           <Achievements />
           <Testimonials />
           <Blog />
           <Contact />
         </main>
+
+        {/* Hidden Developer Mode Modal Console */}
+        <DevConsoleModal
+          isOpen={isConsoleOpen}
+          onClose={() => setIsConsoleOpen(false)}
+          onUnlock={handleUnlockDevMode}
+        />
+
+        {/* Floating AI Chatbot Assistant */}
+        <AIChatbot />
       </SmoothScroll>
     </ThemeProvider>
   );

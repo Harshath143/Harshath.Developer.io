@@ -1,85 +1,173 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { Brain, Cpu, Terminal, Cloud, Code, Wrench } from "lucide-react";
 import { SectionTitle } from "./SectionTitle";
 
-const GROUPS = [
-  { name: "AI / GenAI", skills: ["LangChain", "LlamaIndex", "OpenAI", "Anthropic", "RAG", "Agents", "Vector DBs"] },
-  { name: "Machine Learning", skills: ["scikit-learn", "XGBoost", "Pandas", "NumPy", "Statsmodels"] },
-  { name: "Deep Learning", skills: ["PyTorch", "TensorFlow", "Transformers", "CNNs", "Diffusion"] },
-  { name: "Backend", skills: ["FastAPI", "Node.js", "Postgres", "Redis", "GraphQL"] },
-  { name: "Frontend", skills: ["React", "Next.js", "TypeScript", "Tailwind", "Framer Motion"] },
-  { name: "Cloud / DevOps", skills: ["AWS", "GCP", "Docker", "Kubernetes", "Terraform", "CI/CD"] },
+const SKILL_GROUPS = [
+  {
+    title: "GenAI & LLM",
+    description: "Advanced AI agents, LLM orchestration, and RAG pipelines",
+    icon: Brain,
+    colorClass: "text-purple-400",
+    bgClass: "bg-purple-500/10",
+    borderHoverClass: "hover:border-purple-500/40",
+    glowClass: "group-hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]",
+    skills: [
+      "LangChain",
+      "LangGraph",
+      "AutoGen",
+      "vLLM",
+      "HuggingFace",
+      "RAG Pipelines",
+      "Multi-Agent Systems",
+      "Ollama",
+      "Dynamic Task Execution"
+    ]
+  },
+  {
+    title: "AI & Machine Learning",
+    description: "Deep learning models, architectures, and fine-tuning",
+    icon: Cpu,
+    colorClass: "text-blue-400",
+    bgClass: "bg-blue-500/10",
+    borderHoverClass: "hover:border-blue-500/40",
+    glowClass: "group-hover:shadow-[0_0_30px_rgba(59,130,246,0.15)]",
+    skills: [
+      "PyTorch",
+      "BERT",
+      "Transformers",
+      "Model Fine-tuning",
+      "Vector Databases",
+      "MLOps",
+      "Deep Learning",
+      "Wav2Vec2",
+      "MMS-TTS"
+    ]
+  },
+  {
+    title: "Backend & Microservices",
+    description: "Scalable backend services, APIs, and microservice architectures",
+    icon: Terminal,
+    colorClass: "text-emerald-400",
+    bgClass: "bg-emerald-500/10",
+    borderHoverClass: "hover:border-emerald-500/40",
+    glowClass: "group-hover:shadow-[0_0_30px_rgba(52,211,153,0.15)]",
+    skills: [
+      "FastAPI",
+      "Django",
+      "Celery",
+      "Redis",
+      "PostgreSQL",
+      "REST APIs",
+      "Microservices",
+      "Bash"
+    ]
+  },
+  {
+    title: "Cloud & DevOps",
+    description: "Infrastructure, containerization, and orchestration platforms",
+    icon: Cloud,
+    colorClass: "text-orange-400",
+    bgClass: "bg-orange-500/10",
+    borderHoverClass: "hover:border-orange-500/40",
+    glowClass: "group-hover:shadow-[0_0_30px_rgba(251,146,60,0.15)]",
+    skills: [
+      "Docker",
+      "Kubernetes (Learning)",
+      "GCP",
+      "AWS",
+      "Distributed Systems",
+      "Git",
+      "GitHub"
+    ]
+  },
+  {
+    title: "Programming Languages",
+    description: "Core programming and scripting languages",
+    icon: Code,
+    colorClass: "text-indigo-400",
+    bgClass: "bg-indigo-500/10",
+    borderHoverClass: "hover:border-indigo-500/40",
+    glowClass: "group-hover:shadow-[0_0_30px_rgba(99,102,241,0.15)]",
+    skills: ["Python", "SQL", "Bash", "Java", "C#"]
+  },
+  {
+    title: "AI Developer Tooling",
+    description: "Model evaluation, workflow tracing, and agent development environments",
+    icon: Wrench,
+    colorClass: "text-rose-400",
+    bgClass: "bg-rose-500/10",
+    borderHoverClass: "hover:border-rose-500/40",
+    glowClass: "group-hover:shadow-[0_0_30px_rgba(244,63,94,0.15)]",
+    skills: [
+      "OpenAI & Anthropic APIs",
+      "LangSmith",
+      "LlamaIndex",
+      "Pinecone & Chroma",
+      "DeepEval",
+      "Prompt Engineering",
+      "Weights & Biases",
+      "Jupyter Notebooks"
+    ]
+  }
 ];
 
 export function Skills() {
-  const [active, setActive] = useState(0);
   return (
-    <section id="skills" className="relative px-6 md:px-16 lg:px-24 py-32 bg-card/30">
-      <div className="max-w-6xl mx-auto">
-        <SectionTitle index="02" title="Skill Universe" kicker="WHAT I WORK WITH" />
+    <section id="skills" className="relative px-6 md:px-16 lg:px-24 py-32 bg-card/10">
+      <div className="max-w-7xl mx-auto">
+        <SectionTitle index="02" title="Technical Skills" kicker="Comprehensive skill set in GenAI, Distributed Systems, and Machine Learning" />
 
-        <div className="grid lg:grid-cols-[1fr_1.5fr] gap-10 items-center">
-          {/* Galaxy */}
-          <div className="relative aspect-square max-w-md mx-auto">
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 rounded-full border border-dashed border-primary/30"
-            />
-            <motion.div
-              animate={{ rotate: -360 }}
-              transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-10 rounded-full border border-border"
-            />
-            <div className="absolute inset-0 grid place-items-center">
-              <div className="glass rounded-full px-6 py-3 text-center">
-                <p className="font-display font-bold gradient-text text-xl">{GROUPS[active].name}</p>
-                <p className="font-mono text-[10px] text-muted-foreground mt-1">{GROUPS[active].skills.length} tools</p>
-              </div>
-            </div>
-            {GROUPS.map((g, i) => {
-              const angle = (i / GROUPS.length) * Math.PI * 2 - Math.PI / 2;
-              const r = 42; // %
-              const x = 50 + Math.cos(angle) * r;
-              const y = 50 + Math.sin(angle) * r;
-              return (
-                <button
-                  key={g.name}
-                  onClick={() => setActive(i)}
-                  data-cursor="hover"
-                  className={`absolute -translate-x-1/2 -translate-y-1/2 px-3 py-1.5 rounded-full text-xs font-mono whitespace-nowrap transition-all ${
-                    active === i
-                      ? "bg-primary text-primary-foreground scale-110 shadow-[0_0_20px_var(--color-primary)]"
-                      : "bg-card border border-border hover:border-primary"
-                  }`}
-                  style={{ left: `${x}%`, top: `${y}%` }}
-                >
-                  {g.name}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Skill chips */}
-          <motion.div
-            key={active}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="flex flex-wrap gap-3"
-          >
-            {GROUPS[active].skills.map((s, i) => (
-              <motion.span
-                key={s}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: i * 0.05 }}
-                className="glass rounded-xl px-5 py-3 font-mono text-sm hover:text-primary hover:border-primary transition-colors cursor-default"
-                data-cursor="hover"
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+          {SKILL_GROUPS.map((g, idx) => {
+            const Icon = g.icon;
+            return (
+              <motion.div
+                key={g.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.08, duration: 0.5 }}
+                whileHover={{ y: -6 }}
+                className={`group relative glass rounded-2xl p-6 transition-all duration-300 ${g.borderHoverClass} ${g.glowClass} flex flex-col justify-between`}
               >
-                {s}
-              </motion.span>
-            ))}
-          </motion.div>
+                {/* Subtle top border accent */}
+                <div
+                  aria-hidden
+                  className="absolute -top-px left-6 right-6 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity"
+                  style={{
+                    background: `linear-gradient(90deg, transparent, var(--color-primary), transparent)`
+                  }}
+                />
+
+                <div>
+                  <div className="flex items-center gap-3.5 mb-4">
+                    <div className={`h-11 w-11 rounded-xl ${g.bgClass} flex items-center justify-center`}>
+                      <Icon className={`h-5 w-5 ${g.colorClass}`} />
+                    </div>
+                    <h3 className="font-display text-lg font-bold text-foreground">
+                      {g.title}
+                    </h3>
+                  </div>
+
+                  <p className="text-sm text-muted-foreground mb-6 font-sans leading-relaxed">
+                    {g.description}
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  {g.skills.map((s) => (
+                    <span
+                      key={s}
+                      className="bg-card/40 border border-border/60 hover:border-primary/45 rounded-lg px-2.5 py-1 text-[11px] font-mono text-foreground/80 hover:text-foreground transition-all cursor-default"
+                      data-cursor="hover"
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

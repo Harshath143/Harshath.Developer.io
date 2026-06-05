@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowUpRight, Github, X } from "lucide-react";
 import { SectionTitle } from "./SectionTitle";
 
@@ -12,32 +12,57 @@ type Project = {
   github?: string;
   demo?: string;
   gradient: string;
+  diagram?: { step: string; label: string }[];
 };
 
 const PROJECTS: Project[] = [
   {
-    title: "HelpBOT",
-    tag: "Conversational AI",
-    blurb: "Multi-tenant support agent that resolves 78% of tier-1 tickets autonomously.",
-    stack: ["LangChain", "GPT-4", "Pinecone", "FastAPI"],
-    metrics: ["78% deflection", "<800ms p95", "12 languages"],
+    title: "AI Agent – Investment Advisory System",
+    tag: "LangChain / RAG",
+    blurb: "Developed a personalized investment advisor using LangChain/RAG and transformer models for predictive stock analysis, delivering accurate, tailored forecasts and suggestions. Built containerized inference API using FastAPI + Docker with 99.9% uptime for scalable model serving.",
+    stack: ["LangChain", "LlamaIndex", "FastAPI", "Python", "Docker", "RAG", "Transformers"],
+    metrics: ["99.9% Uptime", "<1.2s Latency", "7+ Data Sources"],
+    github: "https://github.com/Harshath143/AI_Agent_Investment_Advisory",
     gradient: "linear-gradient(135deg, #00FFB3, #00D4FF)",
+    diagram: [
+      { step: "01", label: "User Stock Query" },
+      { step: "02", label: "FastAPI Router" },
+      { step: "03", label: "RAG Vector Search" },
+      { step: "04", label: "Predictive Model" },
+      { step: "05", label: "Inference Response" }
+    ]
   },
   {
-    title: "OCR Intelligence",
-    tag: "Document AI",
-    blurb: "End-to-end OCR + structured extraction pipeline for 1M+ enterprise docs.",
-    stack: ["LayoutLMv3", "PaddleOCR", "Postgres", "Airflow"],
-    metrics: ["96.3% field acc.", "200 docs/sec", "SOC2 ready"],
+    title: "VoiceGPT – Multilingual Voice-Based AI Assistant",
+    tag: "Speech & NLP",
+    blurb: "Developed an end-to-end multilingual AI voice assistant (Tamil & Marathi support) using Wav2Vec2 for accurate Speech-to-Text and MMS-TTS for natural Text-to-Speech generation. Implemented an offline, privacy-focused system that processes data locally, utilizing fine-tuned transformer models for intent classification and Retrieval-Augmented Generation (RAG) with Sentence Transformers to provide real-time, contextually relevant answers.",
+    stack: ["HuggingFace", "RAG", "Ollama", "Wav2Vec2", "MMS-TTS", "Transformers", "Python"],
+    metrics: ["Tamil & Marathi", "100% Offline", "<450ms TTS"],
+    github: "https://github.com/Harshath143/VoiceGPT-AI-Voice-Assistant",
     gradient: "linear-gradient(135deg, #8B5CF6, #E63946)",
+    diagram: [
+      { step: "01", label: "Voice Input" },
+      { step: "02", label: "Wav2Vec2 (STT)" },
+      { step: "03", label: "Local Ollama RAG" },
+      { step: "04", label: "MMS-TTS (Speech)" },
+      { step: "05", label: "Voice Output" }
+    ]
   },
   {
-    title: "RAG Agent",
-    tag: "Retrieval",
-    blurb: "Reasoning-aware retrieval agent over 6M chunks with hybrid scoring.",
-    stack: ["LlamaIndex", "Qdrant", "Reranker", "Redis"],
-    metrics: ["+18 nDCG", "$0.003/query", "Multi-hop"],
+    title: "AI_Company_prototype",
+    tag: "Multi-Agent System",
+    blurb: "NeoForge AI is an autonomous software development system built with Python and FastAPI, enabling the seamless transformation of high-level requirements into production-ready codebases. It utilizes a multi-agent orchestration architecture to ensure high code quality through specialized roles—including Architects and Developers—and provides reliable, placeholder-free file generation. The system features a built-in dashboard for real-time workflow visualization and operates within isolated project environments to maintain strict structural integrity.",
+    stack: ["FastAPI", "Python", "Multi-Agent Architecture", "Groq API", "File Management", "LangGraph"],
+    metrics: ["LangGraph workflow", "Autonomous Dev", "Isolated Env"],
+    github: "https://github.com/Harshath143/AI_Company_prototype",
     gradient: "linear-gradient(135deg, #00D4FF, #8B5CF6)",
+    diagram: [
+      { step: "01", label: "Product Prompt" },
+      { step: "02", label: "LangGraph Router" },
+      { step: "03", label: "Architect Agent" },
+      { step: "04", label: "Developer Agent" },
+      { step: "05", label: "Deployment Build" }
+    ]
   },
   {
     title: "Research Summarizer",
@@ -67,6 +92,17 @@ const PROJECTS: Project[] = [
 
 export function Projects() {
   const [active, setActive] = useState<Project | null>(null);
+
+  useEffect(() => {
+    if (active) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [active]);
 
   return (
     <section id="projects" className="relative px-6 md:px-16 lg:px-24 py-32 bg-card/30">
@@ -127,9 +163,10 @@ export function Projects() {
               exit={{ scale: 0.9, y: 40 }}
               transition={{ type: "spring", damping: 25 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-3xl glass rounded-3xl overflow-hidden"
+              className="relative w-full max-w-3xl glass rounded-3xl overflow-hidden max-h-[90vh] flex flex-col text-left"
+              data-lenis-prevent
             >
-              <div className="h-40 relative" style={{ background: active.gradient }}>
+              <div className="h-32 shrink-0 relative" style={{ background: active.gradient }}>
                 <button
                   onClick={() => setActive(null)}
                   aria-label="Close"
@@ -138,10 +175,33 @@ export function Projects() {
                   <X className="h-4 w-4" />
                 </button>
               </div>
-              <div className="p-8">
+              <div className="p-8 overflow-y-auto flex-1">
                 <p className="font-mono text-xs text-primary tracking-[0.2em]">{active.tag.toUpperCase()}</p>
                 <h3 className="mt-2 font-display text-4xl font-bold">{active.title}</h3>
                 <p className="mt-4 text-lg text-muted-foreground text-pretty">{active.blurb}</p>
+
+                {/* FLOWCHART DIAGRAM */}
+                {active.diagram && (
+                  <div className="mt-8 p-5 rounded-2xl bg-muted/5 border border-border/40">
+                    <p className="font-mono text-[10px] text-muted-foreground mb-4 uppercase tracking-wider">SYSTEM DATAFLOW PIPELINE</p>
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 overflow-x-auto no-scrollbar pb-1">
+                      {active.diagram.map((item, idx) => (
+                        <div key={idx} className="flex flex-col sm:flex-row items-center w-full sm:w-auto">
+                          <div className="flex flex-col items-center p-3 rounded-xl bg-card border border-border/80 min-w-[120px] text-center shadow-sm hover:border-primary/45 transition-colors">
+                            <span className="font-mono text-[9px] text-primary">{item.step}</span>
+                            <span className="text-[10px] font-sans font-semibold mt-1 text-foreground/90 whitespace-nowrap">{item.label}</span>
+                          </div>
+                          {idx < active.diagram!.length - 1 && (
+                            <div className="flex flex-col items-center justify-center my-1 sm:my-0 sm:mx-2 text-primary">
+                              <span className="hidden sm:inline text-xs font-mono">➔</span>
+                              <span className="sm:hidden text-xs font-mono">▼</span>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 <div className="mt-8 grid grid-cols-3 gap-3">
                   {active.metrics.map((m) => (
@@ -163,12 +223,26 @@ export function Projects() {
                 </div>
 
                 <div className="mt-8 flex gap-3">
-                  <a href="#" className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-primary-foreground font-medium">
-                    <ArrowUpRight className="h-4 w-4" /> Live demo
-                  </a>
-                  <a href="#" className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 font-medium hover:border-primary">
-                    <Github className="h-4 w-4" /> Source
-                  </a>
+                  {active.demo && (
+                    <a
+                      href={active.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-primary-foreground font-medium"
+                    >
+                      <ArrowUpRight className="h-4 w-4" /> Live demo
+                    </a>
+                  )}
+                  {active.github && (
+                    <a
+                      href={active.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 font-medium hover:border-primary"
+                    >
+                      <Github className="h-4 w-4" /> Source
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.div>

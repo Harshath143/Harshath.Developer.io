@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { ArrowDownToLine, Folder, Send } from "lucide-react";
+import resumePdf from "../assets/Mohammed_Harshath.pdf";
 
 const ROLES = ["AI Engineer", "LLM Developer", "RAG Architect", "ML Engineer", "Prompt Engineer"];
 
@@ -84,10 +85,7 @@ export function Hero() {
             transition={{ delay: 0.9 }}
             className="mt-8 max-w-xl text-base md:text-lg leading-relaxed text-muted-foreground text-pretty"
           >
-            I design and ship production-grade AI systems — from RAG agents and
-            multimodal pipelines to fine-tuned LLM apps. I bridge research and
-            engineering to build products that feel intelligent, fast, and
-            beautifully crafted.
+            I engineer scalable GenAI backends, multi-agent orchestration platforms, and high-performance RAG pipelines. Bridging machine learning architectures with robust distributed systems, I deliver production-ready AI solutions optimized for latency, evaluation accuracy, and enterprise reliability.
           </motion.p>
 
           <motion.div
@@ -105,7 +103,10 @@ export function Hero() {
               View Projects
             </a>
             <a
-              href="#"
+              href={resumePdf}
+              target="_blank"
+              rel="noopener noreferrer"
+              download
               data-cursor="hover"
               className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 font-medium hover:border-primary hover:text-primary transition-colors"
             >

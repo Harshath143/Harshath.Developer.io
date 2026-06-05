@@ -1,10 +1,9 @@
-import { Github, Linkedin, Twitter, Mail, Youtube, BookOpen } from "lucide-react";
+import { Github, Linkedin, Mail, Youtube, BookOpen } from "lucide-react";
 
 const SOCIALS = [
-  { Icon: Github, href: "https://github.com", label: "GitHub" },
-  { Icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-  { Icon: Twitter, href: "https://twitter.com", label: "Twitter" },
-  { Icon: Mail, href: "mailto:harshath@example.com", label: "Email" },
+  { Icon: Github, href: "https://github.com/Harshath143", label: "GitHub" },
+  { Icon: Linkedin, href: "https://www.linkedin.com/in/mohammed-harshath-ss-a68435208/", label: "LinkedIn" },
+  { Icon: Mail, href: "mailto:harshathdeveloper@gmail.com", label: "Email" },
   { Icon: BookOpen, href: "https://medium.com", label: "Medium" },
   { Icon: Youtube, href: "https://youtube.com", label: "YouTube" },
 ];
@@ -38,12 +37,12 @@ export function SidebarRight() {
   return (
     <aside className="fixed right-5 bottom-0 z-30 hidden md:flex flex-col items-center gap-6 after:content-[''] after:block after:w-px after:h-24 after:bg-border after:mt-4">
       <a
-        href="mailto:harshath@example.com"
+        href="mailto:harshathdeveloper@gmail.com"
         data-cursor="hover"
         className="font-mono text-xs tracking-[0.25em] text-muted-foreground hover:text-primary transition-colors"
         style={{ writingMode: "vertical-rl" }}
       >
-        harshath@example.com
+        harshathdeveloper@gmail.com
       </a>
     </aside>
   );
