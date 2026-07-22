@@ -136,7 +136,7 @@ export function Hero() {
               href={isMounted ? resumePdf : "#"}
               target="_blank"
               rel="noopener noreferrer"
-              download
+              download="Mohammed_Harshath_Resume.pdf"
               data-cursor="hover"
               className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 font-medium hover:border-primary hover:text-primary transition-colors"
             >

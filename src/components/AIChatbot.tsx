@@ -44,7 +44,7 @@ const renderMessageText = (text: string) => {
         href={linkUrl}
         target="_blank"
         rel="noopener noreferrer"
-        download={isPdf}
+        download={isPdf ? "Mohammed_Harshath_Resume.pdf" : undefined}
         className="text-primary underline hover:text-primary/80 font-bold inline-flex items-center gap-1"
       >
         {isPdf ? <FileDown className="h-3 w-3 inline" /> : <ExternalLink className="h-3 w-3 inline" />}
