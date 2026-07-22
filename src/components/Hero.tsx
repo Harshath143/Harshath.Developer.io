@@ -54,6 +54,11 @@ function useScrambleText(words: string[], hold = 2000, speed = 35) {
 
 export function Hero() {
   const scrambled = useScrambleText(ROLES);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <section
@@ -128,7 +133,7 @@ export function Hero() {
               View Projects
             </a>
             <a
-              href={resumePdf}
+              href={isMounted ? resumePdf : "#"}
               target="_blank"
               rel="noopener noreferrer"
               download
