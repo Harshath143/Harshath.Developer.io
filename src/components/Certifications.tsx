@@ -1,72 +1,112 @@
 import { motion } from "framer-motion";
-import { Award, ExternalLink, GraduationCap, Trophy } from "lucide-react";
+import { useState } from "react";
+import { Award, ExternalLink, GraduationCap, Trophy, CheckCircle2, Sparkles } from "lucide-react";
 import { SectionTitle } from "./SectionTitle";
 
-const CERTS = [
+type Cert = {
+  name: string;
+  issuer: string;
+  year: string;
+  category: "ai" | "dev";
+  icon: typeof Trophy;
+  badge: string;
+};
+
+const CERTS: Cert[] = [
   {
     name: "GATE 2024 (Data Science & AI - Rank 2852)",
-    issuer: "National Board",
+    issuer: "IISc / IITs National Board",
     year: "2024",
+    category: "ai",
     icon: Trophy,
-    colorClass: "text-amber-400"
+    badge: "NATIONAL AIR #2852",
   },
   {
     name: "Master Data Science",
     issuer: "IITM GUVI",
     year: "2024",
+    category: "ai",
     icon: GraduationCap,
-    colorClass: "text-blue-400"
+    badge: "VERIFIED CREDENTIAL",
   },
   {
     name: "Advanced Programming Professional",
     issuer: "IITM GUVI",
     year: "2024",
+    category: "dev",
     icon: Award,
-    colorClass: "text-rose-400"
-  }
+    badge: "VERIFIED CREDENTIAL",
+  },
 ];
 
 export function Certifications() {
+  const [filter, setFilter] = useState<"all" | "ai" | "dev">("all");
+
+  const filteredCerts = filter === "all" ? CERTS : CERTS.filter((c) => c.category === filter);
+
   return (
-    <section id="certifications" className="relative px-6 md:px-16 lg:px-24 py-32 bg-card/10">
+    <section id="certifications" className="relative px-6 md:px-12 lg:px-20 py-32 bg-card/10">
       <div className="max-w-6xl mx-auto">
-        <SectionTitle index="05" title="Achievements & Certifications" kicker="NATIONAL DISTINCTIONS & PROFESSIONAL CREDENTIALS" />
-        <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-          {CERTS.map((c, i) => {
+        <SectionTitle index="06" title="Achievements & Certifications" kicker="NATIONAL DISTINCTIONS & PROFESSIONAL CREDENTIALS" />
+
+        {/* Filter Pills */}
+        <div className="flex flex-wrap gap-2.5 mt-8">
+          {[
+            { id: "all", label: "All Credentials" },
+            { id: "ai", label: "Data Science & AI" },
+            { id: "dev", label: "Software Engineering" },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setFilter(tab.id as any)}
+              className={`px-4 py-2 rounded-full font-mono text-xs transition-all ${
+                filter === tab.id
+                  ? "bg-primary text-primary-foreground font-bold shadow-sm"
+                  : "bg-card/60 text-muted-foreground border border-border/60 hover:text-foreground"
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+          {filteredCerts.map((c, i) => {
             const Icon = c.icon;
             return (
               <motion.div
                 key={c.name}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 25 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.5 }}
-                whileHover={{ y: -6 }}
-                className="group relative glass rounded-2xl p-6 block overflow-hidden transition-all duration-300 hover:border-primary/30"
+                className="bento-card bento-card-hover spotlight-card p-6 flex flex-col justify-between"
               >
-                {/* Accent glow on hover */}
-                <div
-                  aria-hidden
-                  className="absolute -top-px left-6 right-6 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity"
-                  style={{
-                    background: "linear-gradient(90deg, transparent, var(--color-primary), transparent)"
-                  }}
-                />
-                
-                <div className="flex items-start justify-between gap-3">
-                  <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <Icon className={`h-5 w-5 ${c.colorClass}`} />
+                <div>
+                  <div className="flex items-center justify-between gap-3 mb-4">
+                    <div className="h-10 w-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <span className="font-mono text-[10px] text-primary bg-primary/10 border border-primary/20 px-2.5 py-0.5 rounded-full font-bold">
+                      {c.badge}
+                    </span>
                   </div>
-                  <ExternalLink className="h-4 w-4 text-muted-foreground/60 group-hover:text-primary transition-colors" />
+
+                  <h3 className="font-display font-bold text-lg text-foreground group-hover:text-primary transition-colors">
+                    {c.name}
+                  </h3>
+
+                  <p className="mt-2 text-xs text-muted-foreground font-mono">
+                    {c.issuer} &bull; {c.year}
+                  </p>
                 </div>
-                
-                <h3 className="mt-5 font-display font-bold leading-snug text-foreground/90 group-hover:text-foreground transition-colors min-h-[50px]">
-                  {c.name}
-                </h3>
-                
-                <p className="mt-2 text-xs text-muted-foreground font-mono">
-                  {c.issuer} · {c.year}
-                </p>
+
+                <div className="mt-6 pt-4 border-t border-border/40 flex items-center justify-between text-xs font-mono text-emerald-400">
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2 className="h-3.5 w-3.5" /> Authenticated
+                  </span>
+                  <ExternalLink className="h-3.5 w-3.5 text-muted-foreground hover:text-primary transition-colors" />
+                </div>
               </motion.div>
             );
           })}
@@ -75,3 +115,4 @@ export function Certifications() {
     </section>
   );
 }
+

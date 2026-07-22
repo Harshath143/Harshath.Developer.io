@@ -34,14 +34,13 @@ export function RadialNav() {
 
   return (
     <>
-      {/* Top bar */}
-      <header className="fixed top-0 inset-x-0 z-50 px-5 md:px-10 py-5 flex items-center justify-between mix-blend-difference">
+      {/* Floating Theme-Aware Header Bar */}
+      <header className="fixed top-4 inset-x-4 md:inset-x-8 z-50 px-4 py-2.5 flex items-center justify-between glass border-border/40 backdrop-blur-xl rounded-full shadow-lg max-w-7xl mx-auto">
         <a
           href="#hero"
           onClick={(e) => {
             e.preventDefault();
             onJump("hero");
-            // Hidden click trigger: 5 clicks opens developer passcode modal
             const clickCount = (window as any)._logoClicks || 0;
             const newCount = clickCount + 1;
             (window as any)._logoClicks = newCount;
@@ -49,37 +48,56 @@ export function RadialNav() {
               window.dispatchEvent(new CustomEvent("trigger-dev-login"));
               (window as any)._logoClicks = 0;
             } else {
-              // Reset clicks after 2 seconds
               if ((window as any)._logoTimeout) clearTimeout((window as any)._logoTimeout);
               (window as any)._logoTimeout = setTimeout(() => {
                 (window as any)._logoClicks = 0;
               }, 2000);
             }
           }}
-          className="relative block rounded-full overflow-hidden h-8 w-8 border border-white/25 hover:border-primary/80 transition-colors duration-300 select-none group"
+          className="relative flex items-center gap-3 select-none group"
         >
-          <img
-            src={profilePic}
-            alt="Mohammed Harshath Profile Logo"
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
+          <div className="h-8 w-8 rounded-full overflow-hidden border border-primary/40 group-hover:scale-105 transition-transform shrink-0">
+            <img
+              src={profilePic}
+              alt="Mohammed Harshath Profile Logo"
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <span className="font-display font-bold text-sm text-foreground hidden sm:inline">
+            Mohammed Harshath
+          </span>
         </a>
 
-        <div className="flex items-center gap-2">
-          {/* theme switch dots */}
-          <div className="hidden md:flex items-center gap-1.5 mr-2">
+        <div className="flex items-center gap-2 md:gap-3">
+          {/* Command Palette Quick Trigger */}
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent("open-command-palette"))}
+            aria-label="Open Command Palette"
+            className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-card/80 border border-border/60 text-xs font-mono text-muted-foreground hover:text-foreground hover:border-primary/50 transition-all"
+          >
+            <span className="text-primary font-bold">⌘K</span>
+            <span className="text-[11px]">Command</span>
+          </button>
+
+          {/* Responsive Theme Switcher */}
+          <div className="flex items-center gap-1 bg-card/80 border border-border/60 rounded-full p-1">
             {THEMES.map((t) => (
               <button
                 key={t.key}
                 onClick={() => setTheme(t.key)}
                 aria-label={`${t.label} theme`}
-                className="h-3 w-3 rounded-full border border-white/40 transition-transform hover:scale-125"
-                style={{
-                  background: t.swatch,
-                  boxShadow: theme === t.key ? `0 0 10px ${t.swatch}` : "none",
-                  transform: theme === t.key ? "scale(1.15)" : "scale(1)",
-                }}
-              />
+                className={`px-2.5 py-1 rounded-full text-[11px] font-mono transition-all flex items-center gap-1.5 ${
+                  theme === t.key
+                    ? "bg-primary text-primary-foreground font-bold shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                <span
+                  className="h-2 w-2 rounded-full inline-block"
+                  style={{ background: t.swatch }}
+                />
+                <span className="hidden sm:inline">{t.label}</span>
+              </button>
             ))}
           </div>
 
@@ -87,10 +105,10 @@ export function RadialNav() {
             onClick={() => setOpen(!open)}
             aria-label={open ? "Close menu" : "Open menu"}
             data-cursor="hover"
-            className="relative h-12 w-12 rounded-full border border-white/30 grid place-items-center text-white"
+            className="relative h-10 w-10 rounded-full border border-border/60 glass grid place-items-center text-foreground hover:border-primary transition-colors"
           >
             <span className="sr-only">Menu</span>
-            <div className="relative h-4 w-5">
+            <div className="relative h-4 w-4">
               <motion.span
                 animate={open ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
                 className="absolute top-0 left-0 right-0 h-[2px] bg-current origin-center"

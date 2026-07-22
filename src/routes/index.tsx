@@ -9,11 +9,13 @@ import { SidebarLeft, SidebarRight } from "@/components/Sidebar";
 import { MouseBlob } from "@/components/MouseBlob";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
+import { AgentSandbox } from "@/components/AgentSandbox";
 import { Skills } from "@/components/Skills";
 import { Experience } from "@/components/Experience";
 import { Projects } from "@/components/Projects";
 import { Telemetry } from "@/components/Telemetry";
 import { DevConsoleModal } from "@/components/DevConsoleModal";
+import { CommandPalette } from "@/components/CommandPalette";
 import { AIChatbot } from "@/components/AIChatbot";
 import { Certifications } from "@/components/Certifications";
 import { Achievements } from "@/components/Achievements";
@@ -91,6 +93,7 @@ function Index() {
         <main className="relative">
           <Hero />
           <About />
+          <AgentSandbox />
           <Skills />
           <Experience />
           <Projects />
@@ -104,6 +107,9 @@ function Index() {
           <Blog />
           <Contact />
         </main>
+
+        {/* Developer Command Palette (Ctrl + K) */}
+        <CommandPalette />
 
         {/* Hidden Developer Mode Modal Console */}
         <DevConsoleModal

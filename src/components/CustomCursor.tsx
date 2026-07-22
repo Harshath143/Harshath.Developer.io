@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export function CustomCursor() {
   const dot = useRef<HTMLDivElement>(null);
   const ring = useRef<HTMLDivElement>(null);
   const pos = useRef({ x: 0, y: 0 });
   const ringPos = useRef({ x: 0, y: 0 });
-  const [hover, setHover] = useState(false);
+  const hoverRef = useRef(false);
 
   useEffect(() => {
     if (window.matchMedia("(pointer: coarse)").matches) return;
@@ -21,19 +21,20 @@ export function CustomCursor() {
       const t = e.target as HTMLElement | null;
       if (!t) return;
       const interactive = t.closest("a, button, [data-cursor='hover'], input, textarea, select");
-      setHover(!!interactive);
+      hoverRef.current = !!interactive;
     };
 
-    window.addEventListener("mousemove", move);
-    window.addEventListener("mouseover", checkHover);
+    window.addEventListener("mousemove", move, { passive: true });
+    window.addEventListener("mouseover", checkHover, { passive: true });
 
     let raf = 0;
     const tick = () => {
       ringPos.current.x += (pos.current.x - ringPos.current.x) * 0.18;
       ringPos.current.y += (pos.current.y - ringPos.current.y) * 0.18;
       if (ring.current) {
-        const s = hover ? 1.8 : 1;
+        const s = hoverRef.current ? 1.8 : 1;
         ring.current.style.transform = `translate3d(${ringPos.current.x - 18}px, ${ringPos.current.y - 18}px, 0) scale(${s})`;
+        ring.current.style.boxShadow = hoverRef.current ? "0 0 24px var(--color-primary)" : "none";
       }
       raf = requestAnimationFrame(tick);
     };
@@ -44,7 +45,7 @@ export function CustomCursor() {
       window.removeEventListener("mouseover", checkHover);
       cancelAnimationFrame(raf);
     };
-  }, [hover]);
+  }, []);
 
   return (
     <>
@@ -57,8 +58,8 @@ export function CustomCursor() {
         ref={ring}
         aria-hidden
         className="pointer-events-none fixed left-0 top-0 z-[100] h-9 w-9 rounded-full border border-primary mix-blend-difference transition-[width,height,opacity,border-color] duration-200 hidden md:block"
-        style={{ boxShadow: hover ? "0 0 24px var(--color-primary)" : "none" }}
       />
     </>
   );
 }
+
