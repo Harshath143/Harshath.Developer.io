@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Play, Pause, Volume2, Mic, Languages, ShieldCheck, Zap } from "lucide-react";
+import { Play, Pause, Volume2, Mic, Languages, ShieldCheck, Zap, Radio } from "lucide-react";
+import { sound } from "@/lib/audioSynth";
 
 export function VoiceGPTPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -14,9 +15,9 @@ export function VoiceGPTPlayer() {
         setAudioBars(
           Array.from({ length: 16 }, () => Math.floor(Math.random() * 65) + 25)
         );
-      }, 150);
+      }, 120);
     } else {
-      setAudioBars([20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20]);
+      setAudioBars([15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15]);
     }
     return () => clearInterval(interval);
   }, [isPlaying]);
@@ -24,13 +25,13 @@ export function VoiceGPTPlayer() {
   const LANG_SAMPLES = {
     tamil: {
       title: "Tamil Speech Synthesis",
-      model: "Meta MMS-TTS (Tamil)",
+      model: "Meta MMS-TTS (Tamil Vocoder)",
       transcript: "வணக்கம்! நான் உங்கள் தமிழ் குரல் உதவியாளர். (Hello! I am your Tamil voice assistant.)",
       latency: "420ms TTS",
     },
     marathi: {
       title: "Marathi Speech Synthesis",
-      model: "Meta MMS-TTS (Marathi)",
+      model: "Meta MMS-TTS (Marathi Vocoder)",
       transcript: "नमस्कार! मी तुमचा मराठी व्हॉइस असिस्टंट आहे. (Hello! I am your Marathi voice assistant.)",
       latency: "440ms TTS",
     },
@@ -44,36 +45,39 @@ export function VoiceGPTPlayer() {
 
   const sample = LANG_SAMPLES[activeLang];
 
+  const handleTogglePlay = () => {
+    sound.playClick();
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleLangChange = (lang: "tamil" | "marathi" | "english") => {
+    sound.playClick();
+    setActiveLang(lang);
+    setIsPlaying(false);
+  };
+
   return (
-    <div className="bento-card spotlight-card p-6 md:p-8 font-sans">
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20 text-primary font-mono text-[10px] font-bold">
-              VOICE & SPEECH AI
-            </span>
-            <span className="flex items-center gap-1 text-emerald-400 font-mono text-[10px]">
-              <ShieldCheck className="h-3 w-3" /> 100% OFFLINE PRIVACY
-            </span>
-          </div>
-          <h3 className="font-display text-2xl font-bold text-foreground">
-            VoiceGPT Multilingual Interactive Player
-          </h3>
+    <div className="bg-[#08080a] border border-zinc-800/90 p-5 font-mono text-xs tactical-reticle my-6">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-zinc-800/80">
+        <div className="flex items-center gap-2">
+          <Radio className="h-4 w-4 text-red-500 animate-pulse" />
+          <span className="text-white font-bold text-sm">INTERACTIVE AUDIO TEST HARNESS</span>
+          <span className="text-[10px] text-emerald-400 border border-emerald-500/30 bg-emerald-950/20 px-2 py-0.5">
+            100% OFFLINE_EDGE
+          </span>
         </div>
 
-        {/* Language Selection Pills */}
-        <div className="flex items-center gap-1.5 bg-card/80 border border-border/60 rounded-full p-1 font-mono text-xs">
+        {/* Language Selection Tabs */}
+        <div className="flex items-center gap-1 bg-zinc-950 p-1 border border-zinc-800">
           {(["tamil", "marathi", "english"] as const).map((lang) => (
             <button
               key={lang}
-              onClick={() => {
-                setActiveLang(lang);
-                setIsPlaying(false);
-              }}
-              className={`px-3 py-1 rounded-full capitalize transition-all ${
+              onClick={() => handleLangChange(lang)}
+              onMouseEnter={() => sound.playHover()}
+              className={`px-3 py-1 capitalize transition-colors cursor-pointer text-[11px] ${
                 activeLang === lang
-                  ? "bg-primary text-primary-foreground font-bold"
-                  : "text-muted-foreground hover:text-foreground"
+                  ? "bg-red-600 text-white font-bold"
+                  : "text-zinc-400 hover:text-white"
               }`}
             >
               {lang}
@@ -82,46 +86,47 @@ export function VoiceGPTPlayer() {
         </div>
       </div>
 
-      {/* Main Waveform Card */}
-      <div className="p-6 rounded-2xl bg-background/90 border border-primary/20 relative overflow-hidden">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
-          <div className="flex items-center gap-4 w-full md:w-auto">
-            <button
-              onClick={() => setIsPlaying(!isPlaying)}
-              className="h-14 w-14 rounded-full bg-primary text-primary-foreground grid place-items-center hover:scale-105 transition-transform shrink-0 shadow-lg"
-              aria-label={isPlaying ? "Pause audio preview" : "Play audio preview"}
-            >
-              {isPlaying ? <Pause className="h-6 w-6 fill-current" /> : <Play className="h-6 w-6 fill-current ml-0.5" />}
-            </button>
+      {/* Main Waveform Audio Card */}
+      <div className="p-4 bg-zinc-950 border border-zinc-800 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-3.5 w-full md:w-auto">
+          <button
+            onClick={handleTogglePlay}
+            onMouseEnter={() => sound.playHover()}
+            className="h-11 w-11 bg-red-600 hover:bg-red-500 text-white flex items-center justify-center cursor-pointer shadow-[0_0_15px_rgba(239,68,68,0.3)] shrink-0 transition-colors"
+            aria-label={isPlaying ? "Pause audio preview" : "Play audio preview"}
+          >
+            {isPlaying ? <Pause className="h-5 w-5 fill-current" /> : <Play className="h-5 w-5 fill-current ml-0.5" />}
+          </button>
 
-            <div>
-              <p className="font-mono text-xs text-primary font-bold">{sample.title}</p>
-              <p className="text-xs text-muted-foreground font-mono mt-0.5">{sample.model}</p>
-            </div>
+          <div>
+            <div className="text-red-400 font-bold text-xs">{sample.title}</div>
+            <div className="text-[11px] text-zinc-500 mt-0.5">{sample.model}</div>
           </div>
-
-          {/* Animated Equalizer Waveform Bars */}
-          <div className="flex items-center gap-1.5 h-12 w-full md:w-auto justify-center px-4">
-            {audioBars.map((height, i) => (
-              <motion.span
-                key={i}
-                animate={{ height: `${height}%` }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="w-1.5 rounded-full bg-gradient-to-t from-primary/40 to-primary inline-block min-h-[8px]"
-              />
-            ))}
-          </div>
-
-          <span className="font-mono text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full shrink-0">
-            ⚡ {sample.latency}
-          </span>
         </div>
 
-        {/* Live Transcript Display */}
-        <div className="mt-6 pt-4 border-t border-border/40 font-mono text-xs text-foreground/90">
-          <span className="text-muted-foreground mr-2">&gt; TRANSCRIPT:</span>
-          <span className="text-primary">{sample.transcript}</span>
+        {/* Animated Equalizer Waveform Bars */}
+        <div className="flex items-end gap-1 h-9 px-4 w-full md:w-auto justify-center">
+          {audioBars.map((height, i) => (
+            <div
+              key={i}
+              className="w-1.5 bg-red-500 transition-all duration-100"
+              style={{
+                height: isPlaying ? `${height}%` : "15%",
+                opacity: isPlaying ? 0.95 : 0.3,
+              }}
+            />
+          ))}
         </div>
+
+        <div className="text-[11px] text-emerald-400 bg-emerald-950/30 border border-emerald-500/30 px-2.5 py-1 shrink-0 font-bold">
+          LATENCY: {sample.latency}
+        </div>
+      </div>
+
+      {/* Live Transcript Display */}
+      <div className="mt-3 pt-3 border-t border-zinc-800/60 text-xs flex items-start gap-2">
+        <span className="text-zinc-500 shrink-0">&gt; PHONEME_TRANSCRIPT:</span>
+        <span className="text-zinc-200 font-mono">{sample.transcript}</span>
       </div>
     </div>
   );

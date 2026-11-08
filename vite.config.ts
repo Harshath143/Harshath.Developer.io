@@ -7,6 +7,7 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
+  nitro: true,
   vite: {
     base: process.env.VITE_BASE_URL || "/",
   },
@@ -15,8 +16,8 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
     prerender: {
-      enabled: true,
-      crawlLinks: true,
+      enabled: false,
+      crawlLinks: false,
     },
   },
 });

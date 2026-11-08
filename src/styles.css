@@ -31,239 +31,307 @@
   --color-ring: var(--ring);
   --color-blob: var(--blob);
   --color-blob-2: var(--blob-2);
-  --font-display: "Space Grotesk", "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-hand: "Caveat", cursive, sans-serif;
 }
 
-/* THEME 1 — Light */
-/* THEME 1 — Light */
+/* Red Neon Outline for giant PORTFOLIO title as seen in video */
+.portfolio-outline-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: transparent;
+  -webkit-text-stroke: 1.8px #ef4444;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+  transition: all 0.3s ease;
+}
+.portfolio-outline-title:hover {
+  -webkit-text-stroke: 2px #ff4d4d;
+  text-shadow: 0 0 25px rgba(239, 68, 68, 0.7);
+}
+
+.handwritten-intro {
+  font-family: "Caveat", cursive, sans-serif;
+  font-size: 1.55rem;
+  letter-spacing: 0.02em;
+  color: #f4f4f5;
+  font-weight: 600;
+}
+
+/* DARPA / Cyberpunk Tactical Default Theme */
 :root,
-[data-theme="light"] {
-  --radius: 0.85rem;
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  --card: #ffffff;
-  --card-foreground: #0f172a;
-  --popover: #ffffff;
-  --popover-foreground: #0f172a;
-  --primary: #2563eb;
+[data-theme="dark"],
+[data-theme="ai"] {
+  --radius: 0.35rem;
+  --background: #050505;
+  --foreground: #f4f4f5;
+  --card: #0b0b0e;
+  --card-foreground: #f4f4f5;
+  --popover: #0b0b0e;
+  --popover-foreground: #f4f4f5;
+  --primary: #ef4444; /* Neon Crimson */
   --primary-foreground: #ffffff;
-  --secondary: #e2e8f0;
-  --secondary-foreground: #0f172a;
-  --muted: #f1f5f9;
-  --muted-foreground: #475569;
-  --accent: #e2e8f0;
-  --accent-foreground: #0f172a;
+  --secondary: #991b1b; /* Muted Blood Red */
+  --secondary-foreground: #ffffff;
+  --muted: #121217;
+  --muted-foreground: #71717a; /* Dim Monospace Slate */
+  --accent: #1e1e24;
+  --accent-foreground: #f4f4f5;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: rgba(15, 23, 42, 0.12);
-  --input: rgba(15, 23, 42, 0.15);
-  --ring: #2563eb;
-  --blob: #3b82f6;
-  --blob-2: #60a5fa;
+  --border: rgba(39, 39, 42, 0.85); /* zinc-800/85 */
+  --input: rgba(39, 39, 42, 0.9);
+  --ring: #ef4444;
+  --blob: #ef4444;
+  --blob-2: #991b1b;
 }
 
-/* THEME 2 — Dark */
-[data-theme="dark"] {
-  --background: #0b1020;
-  --foreground: #ffffff;
-  --card: #11172a;
-  --card-foreground: #ffffff;
-  --popover: #11172a;
-  --popover-foreground: #ffffff;
-  --primary: #00d4ff;
-  --primary-foreground: #061018;
-  --secondary: #1a1a2e;
+[data-theme="light"] {
+  --radius: 0.35rem;
+  --background: #f5f5f7;
+  --foreground: #09090b;
+  --card: #ffffff;
+  --card-foreground: #09090b;
+  --popover: #ffffff;
+  --popover-foreground: #09090b;
+  --primary: #dc2626;
+  --primary-foreground: #ffffff;
+  --secondary: #991b1b;
   --secondary-foreground: #ffffff;
-  --muted: #161c30;
-  --muted-foreground: #9aa4c2;
-  --accent: #1a1a2e;
-  --accent-foreground: #ffffff;
-  --destructive: #ff5577;
+  --muted: #f4f4f5;
+  --muted-foreground: #52525b;
+  --accent: #e4e4e7;
+  --accent-foreground: #09090b;
+  --destructive: #dc2626;
   --destructive-foreground: #ffffff;
-  --border: rgba(255, 255, 255, 0.1);
-  --input: rgba(255, 255, 255, 0.12);
-  --ring: #00d4ff;
-  --blob: #00d4ff;
-  --blob-2: #1a1a2e;
-}
-
-/* THEME 3 — AI */
-[data-theme="ai"] {
-  --background: #050505;
-  --foreground: #ffffff;
-  --card: #0c0c0f;
-  --card-foreground: #ffffff;
-  --popover: #0c0c0f;
-  --popover-foreground: #ffffff;
-  --primary: #00ffb3;
-  --primary-foreground: #04130d;
-  --secondary: #8b5cf6;
-  --secondary-foreground: #ffffff;
-  --muted: #111114;
-  --muted-foreground: #9b9bb0;
-  --accent: #8b5cf6;
-  --accent-foreground: #ffffff;
-  --destructive: #ff4d6d;
-  --destructive-foreground: #ffffff;
-  --border: rgba(255, 255, 255, 0.1);
-  --input: rgba(255, 255, 255, 0.12);
-  --ring: #00ffb3;
-  --blob: #00ffb3;
-  --blob-2: #8b5cf6;
+  --border: rgba(228, 228, 231, 0.9);
+  --input: rgba(228, 228, 231, 0.9);
+  --ring: #dc2626;
+  --blob: #dc2626;
+  --blob-2: #991b1b;
 }
 
 @layer base {
-  * { border-color: var(--color-border); }
-  html { scroll-behavior: smooth; }
+  * { 
+    border-color: var(--color-border); 
+    box-sizing: border-box;
+  }
+  html { 
+    scroll-behavior: smooth; 
+    background-color: #050505;
+  }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-    transition: background-color 0.4s ease, color 0.4s ease;
-    cursor: none;
+    overflow-x: hidden;
+    position: relative;
   }
-  @media (pointer: coarse) {
-    body { cursor: auto; }
-  }
-  h1, h2, h3, h4 {
+  h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
   }
   ::selection {
-    background: var(--color-primary);
-    color: var(--color-primary-foreground);
+    background: #ef4444;
+    color: #ffffff;
   }
 }
 
-@utility text-balance { text-wrap: balance; }
-@utility text-pretty { text-wrap: pretty; }
-
-@utility glass {
-  background: color-mix(in oklab, var(--color-card) 60%, transparent);
-  backdrop-filter: blur(14px);
-  border: 1px solid var(--color-border);
+/* Custom Scrollbar for Terminals & HUD */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ef4444;
 }
 
-@utility gradient-text {
-  background: linear-gradient(120deg, var(--color-primary), var(--color-secondary));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-@utility noise {
+/* Tactical Reticles / Crosshairs on Card Edges */
+.tactical-reticle {
   position: relative;
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.04;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  }
+}
+.tactical-reticle::before,
+.tactical-reticle::after {
+  content: "+";
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  color: #71717a;
+  opacity: 0.5;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  z-index: 20;
+}
+.tactical-reticle::before { 
+  top: 6px; 
+  left: 6px; 
+}
+.tactical-reticle::after { 
+  bottom: 6px; 
+  right: 6px; 
+}
+.tactical-reticle:hover::before,
+.tactical-reticle:hover::after {
+  opacity: 1;
+  color: #ef4444;
+  text-shadow: 0 0 8px rgba(239, 68, 68, 0.7);
 }
 
-/* Floating animation */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+/* Tactical 4-Corner Reticles */
+.corner-crosshairs {
+  position: relative;
 }
-@utility float { animation: float 6s ease-in-out infinite; }
-
-@keyframes spin-slow {
-  to { transform: rotate(360deg); }
+.corner-crosshairs > .corner-tl,
+.corner-crosshairs > .corner-tr,
+.corner-crosshairs > .corner-bl,
+.corner-crosshairs > .corner-br {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-color: #71717a;
+  pointer-events: none;
+  transition: border-color 0.2s ease;
+  z-index: 10;
 }
-@utility spin-slow { animation: spin-slow 24s linear infinite; }
-
-@keyframes orbit {
-  from { transform: rotate(0deg) translateX(var(--orbit-r)) rotate(0deg); }
-  to { transform: rotate(360deg) translateX(var(--orbit-r)) rotate(-360deg); }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-@utility shimmer {
-  background: linear-gradient(90deg,
-    transparent,
-    color-mix(in oklab, var(--color-primary) 30%, transparent),
-    transparent);
-  background-size: 200% 100%;
-  animation: shimmer 2.5s linear infinite;
+.corner-crosshairs > .corner-tl { top: -1px; left: -1px; border-top: 2px solid; border-left: 2px solid; }
+.corner-crosshairs > .corner-tr { top: -1px; right: -1px; border-top: 2px solid; border-right: 2px solid; }
+.corner-crosshairs > .corner-bl { bottom: -1px; left: -1px; border-bottom: 2px solid; border-left: 2px solid; }
+.corner-crosshairs > .corner-br { bottom: -1px; right: -1px; border-bottom: 2px solid; border-right: 2px solid; }
+.corner-crosshairs:hover > .corner-tl,
+.corner-crosshairs:hover > .corner-tr,
+.corner-crosshairs:hover > .corner-bl,
+.corner-crosshairs:hover > .corner-br {
+  border-color: #ef4444;
 }
 
-/* Marquee for testimonials */
+/* Angled Tactical Button with Laser Scanner Bar */
+.tactical-btn {
+  position: relative;
+  font-family: var(--font-mono);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  overflow: hidden;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tactical-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.4), transparent);
+  transform: skewX(-20deg);
+  transition: none;
+  pointer-events: none;
+}
+.tactical-btn:hover::after {
+  left: 150%;
+  transition: left 0.6s ease;
+}
+
+/* Chromatic Aberration & Glitch Hover */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+  user-select: none;
+}
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: inset(0 0 0 0);
+  opacity: 0;
+  pointer-events: none;
+}
+.glitch-text:hover::before {
+  left: -2px;
+  text-shadow: 2px 0 #ef4444;
+  opacity: 0.8;
+  animation: glitch-anim-1 1.5s infinite linear alternate-reverse;
+}
+.glitch-text:hover::after {
+  left: 2px;
+  text-shadow: -2px 0 #3b82f6;
+  opacity: 0.8;
+  animation: glitch-anim-2 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% { clip-path: inset(20% 0 60% 0); }
+  20% { clip-path: inset(60% 0 10% 0); }
+  40% { clip-path: inset(40% 0 30% 0); }
+  60% { clip-path: inset(80% 0 5% 0); }
+  80% { clip-path: inset(10% 0 70% 0); }
+  100% { clip-path: inset(30% 0 45% 0); }
+}
+
+@keyframes glitch-anim-2 {
+  0% { clip-path: inset(10% 0 75% 0); }
+  25% { clip-path: inset(70% 0 15% 0); }
+  50% { clip-path: inset(25% 0 50% 0); }
+  75% { clip-path: inset(85% 0 5% 0); }
+  100% { clip-path: inset(5% 0 85% 0); }
+}
+
+/* Subtle Tactical Scanlines */
+.scanlines-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0) 50%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.3)
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+
+/* DARPA Radar Grid */
+.radar-grid {
+  background-image: 
+    linear-gradient(to right, rgba(39, 39, 42, 0.3) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(39, 39, 42, 0.3) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Red Monospace Telemetry Blink */
+@keyframes red-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 4px #ef4444); }
+  50% { opacity: 0.3; transform: scale(0.92); filter: drop-shadow(0 0 1px #ef4444); }
+}
+.animate-red-pulse {
+  animation: red-pulse 1.8s ease-in-out infinite;
+}
+
+/* Emerald Monospace Telemetry Blink */
+@keyframes emerald-pulse {
+  0%, 100% { opacity: 1; filter: drop-shadow(0 0 4px #10b981); }
+  50% { opacity: 0.3; filter: drop-shadow(0 0 1px #10b981); }
+}
+.animate-emerald-pulse {
+  animation: emerald-pulse 2s ease-in-out infinite;
+}
+
+/* Marquee utility */
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-@utility marquee { animation: marquee 40s linear infinite; }
-
-/* Hide scrollbar but keep functional */
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { scrollbar-width: none; }
-
-/* Bento & Spotlight Utilities */
-@utility bento-card {
-  position: relative;
-  background: color-mix(in oklab, var(--color-card) 75%, transparent);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--color-border);
-  border-radius: 1.25rem;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@utility bento-card-hover {
-  &:hover {
-    border-color: color-mix(in oklab, var(--color-primary) 50%, var(--color-border));
-    box-shadow: 0 12px 40px -10px color-mix(in oklab, var(--color-primary) 20%, transparent);
-    transform: translateY(-4px);
-  }
-}
-
-@utility spotlight-card {
-  position: relative;
-  &::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    padding: 1px;
-    background: radial-gradient(
-      600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      color-mix(in oklab, var(--color-primary) 40%, transparent),
-      transparent 40%
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  &:hover::before {
-    opacity: 1;
-  }
-}
-
-/* Custom Scrollbar for Terminals */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: 9999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary);
-}
+.marquee { animation: marquee 35s linear infinite; }
+.marquee:hover { animation-play-state: paused; }

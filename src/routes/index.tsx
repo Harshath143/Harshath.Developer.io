@@ -3,48 +3,36 @@ import { useState, useEffect } from "react";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { CustomCursor } from "@/components/CustomCursor";
-import { Loader } from "@/components/Loader";
-import { RadialNav } from "@/components/RadialNav";
-import { SidebarLeft, SidebarRight } from "@/components/Sidebar";
-import { MouseBlob } from "@/components/MouseBlob";
-import { Hero } from "@/components/Hero";
-import { About } from "@/components/About";
-import { AgentSandbox } from "@/components/AgentSandbox";
-import { Skills } from "@/components/Skills";
-import { Experience } from "@/components/Experience";
-import { Projects } from "@/components/Projects";
-import { Telemetry } from "@/components/Telemetry";
-import { DevConsoleModal } from "@/components/DevConsoleModal";
+import { TacticalCanvas } from "@/components/TacticalCanvas";
+import { TacticalNavbar } from "@/components/TacticalNavbar";
+import { TacticalHero } from "@/components/TacticalHero";
+import { TacticalAbout } from "@/components/TacticalAbout";
+import { TacticalDeployments } from "@/components/TacticalDeployments";
+import { TacticalMatrix } from "@/components/TacticalMatrix";
+import { TacticalExperience } from "@/components/TacticalExperience";
+import { TacticalCredentials } from "@/components/TacticalCredentials";
+import { TacticalContact } from "@/components/TacticalContact";
+import { TacticalDock } from "@/components/TacticalDock";
 import { CommandPalette } from "@/components/CommandPalette";
+import { DevConsoleModal } from "@/components/DevConsoleModal";
 import { AIChatbot } from "@/components/AIChatbot";
-import { Certifications } from "@/components/Certifications";
-import { Achievements } from "@/components/Achievements";
-import { Testimonials } from "@/components/Testimonials";
-import { Blog } from "@/components/Blog";
-import { Contact } from "@/components/Contact";
+import { Telemetry } from "@/components/Telemetry";
+import { AgentRebuildProvider } from "@/context/AgentRebuildContext";
+import { MultiAgentOverlay } from "@/components/MultiAgentOverlay";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Mohammed Harshath — AI Engineer & GenAI Developer" },
+      { title: "Mohammed Harshath — System Architect & AI Engineer" },
       {
         name: "description",
         content:
-          "Mohammed Harshath builds production AI systems — RAG agents, LLM applications, and ML pipelines. Senior AI engineer portfolio with selected projects, experience, and writing.",
+          "Tactical portfolio of Mohammed Harshath SS. Production AI systems, Multi-Agent orchestration, sub-100ms RAG pipelines, GATE AIR 2852.",
       },
-      { property: "og:title", content: "Mohammed Harshath — AI Engineer" },
-      { property: "og:description", content: "Production AI systems, RAG agents, LLM apps." },
+      { property: "og:title", content: "Mohammed Harshath — System Architect & AI Engineer" },
+      { property: "og:description", content: "Production AI systems, Multi-Agent orchestration, and sub-100ms RAG pipelines." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [
-      { rel: "canonical", href: "/" },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap",
-      },
     ],
   }),
   component: Index,
@@ -53,6 +41,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   const [isDevMode, setIsDevMode] = useState(false);
   const [isConsoleOpen, setIsConsoleOpen] = useState(false);
+  const [hudOverlay, setHudOverlay] = useState(true);
 
   useEffect(() => {
     // Keyboard shortcut handler (Ctrl + Shift + D)
@@ -63,7 +52,6 @@ function Index() {
       }
     };
 
-    // Global custom event handler for logo click
     const handleTriggerDevLogin = () => {
       setIsConsoleOpen(true);
     };
@@ -83,44 +71,68 @@ function Index() {
 
   return (
     <ThemeProvider>
-      <SmoothScroll>
-        <Loader />
-        <CustomCursor />
-        <RadialNav />
-        <SidebarLeft />
-        <SidebarRight />
-        <MouseBlob />
-        <main className="relative">
-          <Hero />
-          <About />
-          <AgentSandbox />
-          <Skills />
-          <Experience />
-          <Projects />
-          
-          {/* Private Telemetry Dashboard (revealed only in Developer Mode) */}
-          {isDevMode && <Telemetry />}
-          
-          <Certifications />
-          <Achievements />
-          <Testimonials />
-          <Blog />
-          <Contact />
-        </main>
+      <AgentRebuildProvider>
+        <SmoothScroll>
+          {/* Custom Monospace Cursor */}
+          <CustomCursor />
 
-        {/* Developer Command Palette (Ctrl + K) */}
-        <CommandPalette />
+          {/* Interactive Background Canvas (Cursors filling in details -> Nanobot follower snake swarm) */}
+          <TacticalCanvas />
 
-        {/* Hidden Developer Mode Modal Console */}
-        <DevConsoleModal
-          isOpen={isConsoleOpen}
-          onClose={() => setIsConsoleOpen(false)}
-          onUnlock={handleUnlockDevMode}
-        />
+          {/* Multi-Agent Blueprint Wireframe Overlay (Cyan boxes with dimensions & laser alignment guides) */}
+          <MultiAgentOverlay />
 
-        {/* Floating AI Chatbot Assistant */}
-        <AIChatbot />
-      </SmoothScroll>
+          {/* Pinned Floating Center Pill Navbar */}
+          <TacticalNavbar
+            onOpenCommandPalette={() => window.dispatchEvent(new CustomEvent("open-command-palette"))}
+            onOpenDevConsole={() => setIsConsoleOpen(true)}
+          />
+
+          {/* Main Tactical Modules (Exact order of reference video) */}
+          <main className="relative z-10">
+            {/* 1. Hero Section (PORTFOLIO, HARSHATH., Operator Card, Stack, Arsenal Chips) */}
+            <TacticalHero />
+
+            {/* 2. Background & Philosophy Section (// 01.00 SEC_ABOUT INDEX [01/05], Prose, 4 Tenets Accordion) */}
+            <TacticalAbout />
+
+            {/* 3. Flagship Deployments (ARCHITECTURAL SHOWCASE, SAAI 7-Layer Core, 3 Deployments) */}
+            <TacticalDeployments />
+
+            {/* 4. The Systems Matrix (ENGINEERING INDEX, Filter Pills, #SYS-01 to #SYS-06) */}
+            <TacticalMatrix />
+
+            {/* 5. Verified Credentials & Field Records */}
+            <TacticalExperience />
+            <TacticalCredentials />
+
+            {/* Private Telemetry Dashboard (revealed only in Developer Mode) */}
+            {isDevMode && <Telemetry />}
+
+            {/* 6. Direct Connect & Terminal Dispatch (Let's Architect Something Extraordinary) */}
+            <TacticalContact />
+          </main>
+
+          {/* Floating Bottom Telemetry Dock (Rebuilt by 28 agents, On-Air, Replay) */}
+          <TacticalDock
+            onToggleHud={() => setHudOverlay(!hudOverlay)}
+            onOpenCommandPalette={() => window.dispatchEvent(new CustomEvent("open-command-palette"))}
+          />
+
+          {/* Developer Command Palette (Ctrl + K) */}
+          <CommandPalette />
+
+          {/* Developer Mode Modal Console (Ctrl + Shift + D) */}
+          <DevConsoleModal
+            isOpen={isConsoleOpen}
+            onClose={() => setIsConsoleOpen(false)}
+            onUnlock={handleUnlockDevMode}
+          />
+
+          {/* Floating AI Chatbot Assistant */}
+          <AIChatbot />
+        </SmoothScroll>
+      </AgentRebuildProvider>
     </ThemeProvider>
   );
 }
